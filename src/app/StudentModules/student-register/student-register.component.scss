@@ -1,0 +1,26 @@
+
+.container {
+    background-color: red;
+    max-width: 700px; /* Adjust the maximum width as per your requirement */
+    height: auto; /* You can set a specific height if needed or use auto for dynamic height */
+    padding: 20px; /* Add some padding for better appearance */
+    
+}
+
+.registration-form {
+    padding: 20px;
+}
+.errorMessage{
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.center-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

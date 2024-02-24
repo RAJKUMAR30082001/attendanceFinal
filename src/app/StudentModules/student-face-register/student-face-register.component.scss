@@ -1,0 +1,37 @@
+body{
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+canvas{
+    position: absolute;
+}
+#canvacontainer{
+    position: absolute;
+    top:0;
+    left: 0;
+}
+.container{
+    background-color: red;
+    width: 500px;
+    height: 100vh;
+}
+#myVideo{
+    margin-left: 30px;
+}
+.errorMessage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#Button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 200px;
+}

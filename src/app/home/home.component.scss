@@ -1,0 +1,73 @@
+.body {
+    background-image: url('../../assets/tce.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    height: 120vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar {
+  background-color: rgba(51, 4, 4, 0.8);
+  padding:0;
+  }
+
+  .navbar-brand {
+    padding: 0;
+  }
+  .navbar-nav {
+margin: 0;
+  }
+
+  .navbar-brand img {
+   max-width: 100%;
+  }
+  .navbar-nav .nav-link {
+color: #fff; /* Set text color to white */
+}
+
+/* Blink effect animation */
+@keyframes blink {
+0%, 100% {
+  opacity: 1;
+}
+50% {
+  opacity: 0;
+}
+}
+
+.navbar-nav .nav-link.blink {
+animation: blink 1s infinite; /* Apply the blink animation */
+}
+.navbar-nav .nav-link:hover {
+color: white; /* Change text color to white on hover */
+animation: none; /* Disable the blink animation on hover */
+}
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .btn-container button {
+margin: 10px;
+background-color: yellow; /* Set button background color to yellow */
+color: #0a0a0a; /* Set text color to white */
+border: none;
+}
+
+.btn-container button:hover {
+  color:aliceblue;
+cursor: pointer;
+background-color: red; /* Change background color to red on hover */
+}
+
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+
+  }

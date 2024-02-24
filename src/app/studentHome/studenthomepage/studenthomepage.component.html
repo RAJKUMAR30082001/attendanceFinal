@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(207, 78, 78);
+        }
+
+        #container {
+            display: flex;
+        }
+
+        #side-container {
+            width: 450px;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        #profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        #profile p {
+            margin: 5px 0;
+        }
+
+        #sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-button {
+    background-color: #555;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-button:hover {
+    background-color: #f9e212;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+        #logout{
+            margin-top: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="side-container">
+            <div id="profile" >
+                <p>Name: {{userDetails['firstName']}}</p>
+                <p>Registration Number: {{userDetails['registerNumber']}}</p>
+                <p>Department: {{userDetails['department']}}</p>
+            </div>
+            <div id="sidebar-buttons">
+                <a href="#" class="sidebar-button">Attendance</a>
+                <a href="#" class="sidebar-button">Leave Letter</a>
+                <a href="#" class="sidebar-button" id="logout">Logout</a>
+            </div>
+        </div>
+        
+        <!-- Main content goes here -->
+    </div>
+</body>
+</html>
+
