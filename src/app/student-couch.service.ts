@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CheckValidityService } from './check-validity.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -80,7 +81,7 @@ export class StudentCouchService {
   }
   login(LoginDetails:loginDetails,errorMessage:HTMLDivElement) {
     const registerNumber=LoginDetails.registerNumber
-    const password=LoginDetails.password
+    const password=this.hashedPassword(LoginDetails.password)
     const url = this.getViewUrl(registerNumber);
   
     this.http.get<CouchDBViewResponse>(url, { headers: this.getHeader() })
@@ -129,5 +130,11 @@ export class StudentCouchService {
 
   })
   
-}
+  }
+  hashedPassword(password:string):string{
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    console.log(hashedPassword)
+    return hashedPassword;
+  }
+  
 }

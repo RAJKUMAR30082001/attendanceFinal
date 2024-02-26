@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentData } from '../../student-data';
 import { StudentCouchService } from '../../student-couch.service';
 import { Router } from '@angular/router';
+import { FacultyService } from 'src/app/faculty.service';
 
 @Component({
   selector: 'app-student-register',
@@ -19,7 +20,7 @@ export class StudentRegisterComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder,private service:StudentCouchService,private red:Renderer2,private router:Router) {}
+  constructor(private fb: FormBuilder,private service:StudentCouchService,private red:Renderer2,private router:Router,private faculty:FacultyService) {}
   
 
   ngOnInit() {
@@ -58,7 +59,7 @@ export class StudentRegisterComponent implements OnInit {
           department: this.registerForm.value.department.toLowerCase(),
           registerNumber: this.registerForm.value.registerNumber,
           email: this.registerForm.value.email,
-          password: this.registerForm.value.password
+          password: this.service.hashedPassword(this.registerForm.value.password)
         };
 
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);

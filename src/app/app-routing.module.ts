@@ -5,6 +5,9 @@ import { StudentRegisterComponent } from './StudentModules/student-register/stud
 import { StudentFaceRegisterComponent } from './StudentModules/student-face-register/student-face-register.component';
 import { StudentLoginComponent } from './StudentModules/student-login/student-login.component';
 import { StudenthomepageComponent } from './studentHome/studenthomepage/studenthomepage.component';
+import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
+import { AdminService } from './admin.service';
+import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -13,6 +16,10 @@ const routes: Routes = [
   {path:"faceRegister/:registerNumber",component:StudentFaceRegisterComponent},
   {path:'login',component:StudentLoginComponent },
   {path:'studentHome',component:StudenthomepageComponent},
+  {path:"adminHome",component:AdminHomeComponent,canActivate:[AdminService]},
+  {path:"facultyRegister",component:FacultyRegisterComponent},
+
+
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 

@@ -18,3 +18,13 @@ export interface loginDetails{
     registerNumber:string;
     password:string
 }
+
+export interface facultyLogin{
+    name:string
+    email:string
+    password:string
+    subject:string
+    subjectCode:string
+    department:string
+    permitted:boolean
+}

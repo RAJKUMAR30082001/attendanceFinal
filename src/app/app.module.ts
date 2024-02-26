@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StudentLoginComponent } from './StudentModules/student-login/student-login.component';
 import { StudentFaceRegisterComponent } from './StudentModules/student-face-register/student-face-register.component';
 import { StudenthomepageComponent } from './studentHome/studenthomepage/studenthomepage.component';
+import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
+import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { StudenthomepageComponent } from './studentHome/studenthomepage/studenth
     StudentRegisterComponent,
     StudentLoginComponent,
     StudentFaceRegisterComponent,
-    StudenthomepageComponent
+    StudenthomepageComponent,
+    AdminHomeComponent,
+    FacultyRegisterComponent
   ],
   imports: [
     BrowserModule,

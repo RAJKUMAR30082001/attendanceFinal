@@ -14,7 +14,7 @@ export class FaceapiService {
 
   constructor() { }
   async FaceDetection(video: HTMLVideoElement,registerNumber:string): Promise<any> {
-    console.log("comming")
+    console.log("coming")
     try{
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri('./assets/models'),
@@ -47,7 +47,7 @@ export class FaceapiService {
     console.log(labeledDescriptors)
 
     this.resize = faceapi.resizeResults(this.results, this.displaySize);
-    console.log("resize naan thaan",this.resize);
+    
     canva.getContext('2d').clearRect(0, 0, canva.width, canva.height);
     faceapi.draw.drawDetections(canva, this.resize);
     
