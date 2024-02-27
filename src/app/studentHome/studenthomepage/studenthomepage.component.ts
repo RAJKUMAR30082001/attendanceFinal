@@ -12,12 +12,16 @@ export class StudenthomepageComponent implements OnInit{
   userDetails!:any
   keys!:string[]
 constructor(private service:CheckValidityService){}
-ngOnInit(): void {
-  this.userAuth=this.service.getAuth()
-  if(this.userAuth===true){
-    this.userDetails=this.service.getData()
-    console.log(this.userDetails)
-    this.keys=Object.keys(this.userDetails)
-  }
-}
+    ngOnInit(): void {
+      this.userAuth=this.service.getAuth()
+      if(this.userAuth===true){
+        this.userDetails=this.service.getData()
+        console.log(this.userDetails)
+        this.keys=Object.keys(this.userDetails)
+      }
+    }
+    Logout(){
+      this.service.removeData()
+      
+    }
 }

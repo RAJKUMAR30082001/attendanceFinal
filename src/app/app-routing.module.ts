@@ -8,6 +8,8 @@ import { StudenthomepageComponent } from './studentHome/studenthomepage/studenth
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { AdminService } from './admin.service';
 import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
+import { FacultyLoginPageComponent } from './facultyLogin/faculty-login-page/faculty-login-page.component';
+import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -17,7 +19,9 @@ const routes: Routes = [
   {path:'login',component:StudentLoginComponent },
   {path:'studentHome',component:StudenthomepageComponent},
   {path:"adminHome",component:AdminHomeComponent,canActivate:[AdminService]},
+  {path:"facultyLogin",component:FacultyLoginPageComponent},
   {path:"facultyRegister",component:FacultyRegisterComponent},
+  {path:"facultyAdmit",component:FacultyAdmitComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }

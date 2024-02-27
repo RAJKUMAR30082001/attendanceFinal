@@ -1,0 +1,46 @@
+
+<body>
+    
+
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-12 login-form">
+                <h2 class="text-center mb-4">Login</h2>
+                <div class="errorMessage"></div>
+                <form [formGroup]="LoginForm" (ngSubmit)="Login()">
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Enter your email" formControlName="email">
+                        <div *ngIf="LoginForm.get('email')!.hasError('required') && LoginForm.get('email')!.touched" class="error-message">
+                            email is required</div>
+                            <div *ngIf="LoginForm.get('email')!.hasError('email') && LoginForm.get('email')!.touched" class="error-message">
+                            enter valid Email</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Enter your password" formControlName="password">
+                        <div class="error-message" *ngIf="LoginForm.get('password')!.hasError('required') && LoginForm.get('password')!.touched">
+                            Password is required.
+                          </div>
+                          <div class="error-message" *ngIf="LoginForm.get('password')!.hasError('minlength') && LoginForm.get('password')!.touched">
+                            Password must be at least 8 characters long.
+                          </div>
+                          <div class="error-message" *ngIf="LoginForm.get('password')!.hasError('pattern') && LoginForm.get('password')!.touched">
+                            Password must contain at least one lowercase, uppercase, and symbol.
+                          </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="LoginForm.invalid">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+
+
+
+
+
+

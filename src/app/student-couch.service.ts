@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CouchDBViewResponse, StudentData, loginDetails } from './student-data';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { CheckValidityService } from './check-validity.service';
-
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class StudentCouchService {
   readonly apiUrl="http://localhost:5984/studentdatabase"
   readonly username = 'rajkumar';
   readonly password = 'rajraina45';
+  public year=new Date().getFullYear()
 
   constructor(private http: HttpClient,private router:Router,private check:CheckValidityService) { }
  
@@ -80,8 +81,9 @@ export class StudentCouchService {
         })
   }
   login(LoginDetails:loginDetails,errorMessage:HTMLDivElement) {
-    const registerNumber=LoginDetails.registerNumber
-    const password=this.hashedPassword(LoginDetails.password)
+    const registerNumber=LoginDetails.registerNumber? LoginDetails.registerNumber : '';
+    // const password=this.hashedPassword(LoginDetails.password)
+    const password=LoginDetails.password
     const url = this.getViewUrl(registerNumber);
   
     this.http.get<CouchDBViewResponse>(url, { headers: this.getHeader() })
@@ -125,16 +127,24 @@ export class StudentCouchService {
           this.updateDocument(response)
         }
       }
-
-
-
-  })
+    })
   
   }
   hashedPassword(password:string):string{
     const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
     console.log(hashedPassword)
     return hashedPassword;
+  }
+
+  getAdminRequiredData(): Observable<any> {
+    return this.getFullDocument().pipe(
+      map(data => data[this.year]),
+      catchError(error => {
+        // Handle the error if needed
+        console.error('Error fetching admin data:', error);
+        return of(null); 
+      })
+    );
   }
   
 }

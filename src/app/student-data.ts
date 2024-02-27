@@ -17,6 +17,7 @@ export interface CouchDBViewResponse {
 export interface loginDetails{
     registerNumber:string;
     password:string
+   
 }
 
 export interface facultyLogin{

@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
 export class CheckValidityService {
   UserAuth:boolean=true
   constructor(private route:Router) { }
-  SetData(details:any){
+  SetData(details:any,type?:boolean){
+    if(type){
+    localStorage.setItem("userAuth",String(this.UserAuth))
+    localStorage.setItem("userDetails",JSON.stringify(details))
+    }
+    else{
     localStorage.setItem("userAuth",String(this.UserAuth))
     localStorage.setItem("userDetails",JSON.stringify(details))
     this.route.navigate(['/studentHome'])
+  }
   }
   getData():any{
     const details=localStorage.getItem("userDetails")
@@ -29,5 +35,6 @@ export class CheckValidityService {
     // Remove 'userAuth' and 'userDetails' from localStorage
     localStorage.removeItem('userAuth');
     localStorage.removeItem('userDetails');
+    this.route.navigate(['/home'])
   }
 }

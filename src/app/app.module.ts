@@ -11,6 +11,8 @@ import { StudentFaceRegisterComponent } from './StudentModules/student-face-regi
 import { StudenthomepageComponent } from './studentHome/studenthomepage/studenthomepage.component';
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
+import { FacultyLoginPageComponent } from './facultyLogin/faculty-login-page/faculty-login-page.component';
+import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { FacultyRegisterComponent } from './facultyLogin/faculty-register/facult
     StudentFaceRegisterComponent,
     StudenthomepageComponent,
     AdminHomeComponent,
-    FacultyRegisterComponent
+    FacultyRegisterComponent,
+    FacultyLoginPageComponent,
+    FacultyAdmitComponent
   ],
   imports: [
     BrowserModule,

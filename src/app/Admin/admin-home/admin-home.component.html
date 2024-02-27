@@ -74,10 +74,10 @@
                <p>Admin Panel</p>
             </div>
             <div id="sidebar-buttons">
-                <a href="#" class="sidebar-button">Faculty Admit</a>
+                <a href="#" class="sidebar-button" [routerLink]="['/facultyAdmit']">Faculty Admit</a>
                 <a href="#" class="sidebar-button">Timetable Update</a>
                 <a href="" class="sidebar-button">Holiday Update</a>
-                <a href="#" class="sidebar-button" id="logout">Logout</a>
+                <a href="#" class="sidebar-button" id="logout" (click)="Logout()">Logout</a>
             </div>
         </div>
         
