@@ -13,6 +13,9 @@ import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
 import { FacultyLoginPageComponent } from './facultyLogin/faculty-login-page/faculty-login-page.component';
 import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.component';
+import { PermitLeaveComponent } from './facultyHome/permit-leave/permit-leave.component';
+import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.component';
+import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.compo
     AdminHomeComponent,
     FacultyRegisterComponent,
     FacultyLoginPageComponent,
-    FacultyAdmitComponent
+    FacultyAdmitComponent,
+    PermitLeaveComponent,
+    FacultyHomeComponent,
+    UpdateAttendanceComponent
   ],
   imports: [
     BrowserModule,

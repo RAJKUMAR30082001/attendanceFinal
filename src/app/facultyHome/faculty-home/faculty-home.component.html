@@ -74,26 +74,27 @@
             transition: all 0.3s ease;
         }
 
-        
+        #logout {
+            margin-top: 200px;
+        }
     </style>
 </head>
 <body>
     <div id="container">
         <div id="side-container">
             <div id="profile" >
-               <p>Admin Panel</p>
+               <strong>{{facultyDetails.name| uppercase}}</strong><br>
+               <strong>{{facultyDetails.department | uppercase}}</strong>
             </div>
             <div id="sidebar-buttons">
-                <a class="sidebar-button" (click)="FacultyAdmit($event)" *ngIf="studentData" class="HoverEffect">Faculty Admit</a>
-                <a href="#" class="sidebar-button">Timetable Update</a>
-                <a href="" class="sidebar-button">Holiday Update</a>
-                <a href="#" class="sidebar-button" id="logout" (click)="Logout()">Logout</a>
+                <a class="sidebar-button" class="HoverEffect">Update Attendance</a>
+                <a href="#" class="sidebar-button">Grant Permission</a>
+                <a href="#" class="sidebar-button" id="logout">Logout</a>
             </div>
         </div>
-        <div *ngIf="studentData">
-            <app-faculty-admit></app-faculty-admit>
-        </div>
+       
         <!-- Main content goes here -->
     </div>
 </body>
 </html>
+

@@ -1,1 +1,26 @@
-<p>faculty-admit works!</p>
+
+<table>
+    <thead>
+      <tr>
+        <th id="thead">Name</th>
+        <th>Department</th>
+        <th>Subject Code</th>
+        <th id="thead">Subject</th>
+        <th id="thead">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let faculty of facultyDataToPermit">
+          <td>{{ faculty.name }}</td>
+          <td>{{ faculty.department }}</td>
+          <td>{{ faculty.subjectCode }}</td>
+          <td>{{faculty.subject}}</td>
+          <td>
+            <button (click)="allowFaculty(faculty.email,faculty.department,faculty)" class="allow-button">Allow</button>
+            <button (click)="denyFaculty(faculty.email,faculty.department,faculty)" class="deny-button">Deny</button>
+          </td>
+       
+      </tr>
+    </tbody>
+</table> 
+  

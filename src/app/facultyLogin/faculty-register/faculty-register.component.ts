@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FacultyService } from 'src/app/faculty.service';
 import { facultyLogin } from 'src/app/student-data';
 
@@ -14,7 +15,7 @@ export class FacultyRegisterComponent implements OnInit {
   facultyForm!:FormGroup
   errorMessage!:HTMLDivElement
 
-  constructor(private facultyService:FacultyService,private fb:FormBuilder,private render:Renderer2){}
+  constructor(private facultyService:FacultyService,private fb:FormBuilder,private render:Renderer2,private route:Router){}
 
   ngOnInit(): void {
     this.errorMessage=this.render.selectRootElement(".errorMessage")
@@ -46,6 +47,9 @@ export class FacultyRegisterComponent implements OnInit {
       console.log(this.facultyDetails)
       this.facultyService.putData(this.facultyDetails,this.errorMessage)
       console.log("success")
+      this.facultyForm.reset()
+      this.route.navigate(['/home'])
+
       
     }
   }

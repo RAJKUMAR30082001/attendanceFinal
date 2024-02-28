@@ -10,6 +10,9 @@ import { AdminService } from './admin.service';
 import { FacultyRegisterComponent } from './facultyLogin/faculty-register/faculty-register.component';
 import { FacultyLoginPageComponent } from './facultyLogin/faculty-login-page/faculty-login-page.component';
 import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.component';
+import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.component';
+import { PermitLeaveComponent } from './facultyHome/permit-leave/permit-leave.component';
+import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -22,6 +25,9 @@ const routes: Routes = [
   {path:"facultyLogin",component:FacultyLoginPageComponent},
   {path:"facultyRegister",component:FacultyRegisterComponent},
   {path:"facultyAdmit",component:FacultyAdmitComponent},
+  {path:"facultyHome",component:FacultyHomeComponent},
+  {path:"updateAttendance",component:UpdateAttendanceComponent},
+  {path:"permitLeave",component:PermitLeaveComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }

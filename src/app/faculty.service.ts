@@ -4,6 +4,8 @@ import { facultyLogin } from './student-data';
 import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { Observable, map } from 'rxjs';
+import { CheckValidityService } from './check-validity.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,7 @@ export class FacultyService {
   // Current year
   year = new Date().getFullYear();
 
-  constructor(private stdService: StudentCouchService, private http: HttpClient) { }
+  constructor(private stdService: StudentCouchService, private http: HttpClient,private check:CheckValidityService,private route:Router) { }
 
   // Method to update or insert faculty data
   putData(data: facultyLogin, errorMessage: HTMLDivElement) {
@@ -107,13 +109,15 @@ export class FacultyService {
         return;
       } else {
         let permit = data.rows[0].value.permitted;
-        if (permit) {
+        console.log(permit)
+        if (!permit) {
           errorMessage.innerHTML = 'You are not authenticated';
           return;
         } else {
           let passHashed = data.rows[0].value.password;
           if (this.hashedPassword(password) === passHashed) {
-            console.log(data['rows'][0].value);
+            this.check.SetData(data['rows'][0].value);
+            this.route.navigate(['/facultyHome'])
           } else {
             errorMessage.innerHTML = "Enter correct password";
           }
@@ -131,5 +135,8 @@ export class FacultyService {
     return this.http.get<any>(this.baseUrl,{headers:this.Header}).pipe(
       map(data=> data['mca'])
     )
+  }
+  getFullDocument():Observable<any>{
+    return this.http.get<any>(this.baseUrl, { headers: this.Header })
   }
 }

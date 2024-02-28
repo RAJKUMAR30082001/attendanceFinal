@@ -11,7 +11,6 @@ import { CheckValidityService } from './check-validity.service';
 })
 export class AdminService implements CanActivate{
   private bool!:boolean
-  facultyDetails!:any
   constructor(private http:HttpClient,private stdService:StudentCouchService,private navigater:Router,private check:CheckValidityService) { }
   private baseUrl=`${this.stdService.apiUrl}/Admin`
   private Auth=this.stdService.getHeader()
@@ -22,8 +21,11 @@ export class AdminService implements CanActivate{
     return true
    }
    else{
+    if(this.check.getAuth()){
+      return true
+    }
     this.navigater.navigate(['/home'])
-    // console.log(username)
+    
     return false
    }
   }
@@ -42,7 +44,7 @@ export class AdminService implements CanActivate{
         (error) => {
           // Handle error, for example, by rejecting the promise
           console.error('Error in HTTP request:', error);
-          reject(false);
+          reject(false)
         }
       );
     });
@@ -53,10 +55,6 @@ export class AdminService implements CanActivate{
   getUrl():Observable<any>{
     return this.http.get<any>(this.baseUrl, { headers: this.Auth })
   }
-  setFacultyDetails(data:any):any{
-    this.facultyDetails=data
-  }
-  getFacultyDetails():any{
-    return this.facultyDetails
-  }
+  
+  
 }
