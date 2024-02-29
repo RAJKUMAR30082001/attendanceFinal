@@ -9,12 +9,14 @@ export class FaceapiService {
   public discriptions: any[] = [];
   public flag: boolean = false;
   public results: any;
- 
+ public count:number=0
   public resize:any
+  public canva:any
 
   constructor() { }
   async FaceDetection(video: HTMLVideoElement,registerNumber:string): Promise<any> {
     console.log("coming")
+    
     try{
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri('./assets/models'),
@@ -26,18 +28,19 @@ export class FaceapiService {
   }catch(error){
     console.log("error of the model",error)
   }
-
-    let canva = await faceapi.createCanvasFromMedia(video);
+    if(this.count===0){
+    this.canva = await faceapi.createCanvasFromMedia(video);
     const div = document.getElementById("canvacontainer");
     if (div) {
-      div.append(canva);
+      div.append(this.canva);
     }
+  }
 
     if (video) {
       this.displaySize = { width: video.width, height: video.height };
     }
 
-    faceapi.matchDimensions(canva, this.displaySize);
+    faceapi.matchDimensions(this.canva, this.displaySize);
 
     this.results = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
     console.log("results:",this.results);
@@ -48,10 +51,10 @@ export class FaceapiService {
 
     this.resize = faceapi.resizeResults(this.results, this.displaySize);
     
-    canva.getContext('2d').clearRect(0, 0, canva.width, canva.height);
-    faceapi.draw.drawDetections(canva, this.resize);
+    this.canva.getContext('2d').clearRect(0, 0, this.canva.width, this.canva.height);
+    faceapi.draw.drawDetections(this.canva, this.resize);
     
-
+    this.count++
     return labeledDescriptors;
   }
 }

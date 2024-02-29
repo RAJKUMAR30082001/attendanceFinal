@@ -82,8 +82,8 @@ export class StudentCouchService {
   }
   login(LoginDetails:loginDetails,errorMessage:HTMLDivElement) {
     const registerNumber=LoginDetails.registerNumber? LoginDetails.registerNumber : '';
-    // const password=this.hashedPassword(LoginDetails.password)
-    const password=LoginDetails.password
+    const password=this.hashedPassword(LoginDetails.password)
+    // const password=LoginDetails.password
     const url = this.getViewUrl(registerNumber);
   
     this.http.get<CouchDBViewResponse>(url, { headers: this.getHeader() })
@@ -146,5 +146,6 @@ export class StudentCouchService {
       })
     );
   }
+
   
 }

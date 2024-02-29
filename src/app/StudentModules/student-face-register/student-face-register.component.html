@@ -10,7 +10,7 @@
         <div class="errorMessage"></div>
         <video src=""  id="myVideo" width="400" height="400" autoplay></video> 
         <div id="canvacontainer"></div>
-        <button onclick="startCapture()" [disabled]="flag==='notScanned'" id="Button" [routerLink]="['/home']">Register</button>
+        <button [disabled]="flag==='notScanned'" id="Button" [routerLink]="['/home']">Register</button>
         <a href="" [routerLink]="['/login']">Click here to login</a>
     </div>
 </body>

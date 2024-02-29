@@ -7,6 +7,8 @@ export interface StudentData {
     email:string
     password:string
     confirmPassword?:string
+    leaveLetter:any[]
+    attendanceRecord:any[]
 }
 export interface CouchDBViewResponse {
     total_rows: number;

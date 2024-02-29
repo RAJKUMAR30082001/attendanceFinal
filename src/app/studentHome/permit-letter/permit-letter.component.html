@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Letter Form</title>
+  <!-- Bootstrap CSS (Already Installed) -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .leave-form {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="leave-form">
+    <h2 class="text-center mb-4">Leave Letter</h2>
+    <!-- Angular Reactive Form -->
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+      <!-- Name (Auto-filled) -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name" formControlName="name">
+      </div>
+
+      <!-- Department -->
+      <div class="mb-3">
+        <label for="department" class="form-label">Department</label>
+        <input type="text" class="form-control" id="department" placeholder="Enter your department" formControlName="department">
+      </div>
+
+      <!-- Subject Code -->
+      <div class="mb-3">
+        <label for="subjectCode" class="form-label">Subject Code</label>
+        <input type="text" class="form-control" id="subjectCode" placeholder="Enter subject code" formControlName="subjectCode">
+      </div>
+
+      <!-- Leave Date -->
+      <div class="mb-3">
+        <label for="leaveDate" class="form-label">Leave Date</label>
+        <input type="date" class="form-control" id="leaveDate" formControlName="leaveDate">
+      </div>
+
+      <!-- Reason -->
+      <div class="mb-3">
+        <label for="reason" class="form-label">Reason</label>
+        <textarea class="form-control" id="reason" rows="4" placeholder="Enter your leave reason" formControlName="reason"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

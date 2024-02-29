@@ -16,6 +16,7 @@ import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.compo
 import { PermitLeaveComponent } from './facultyHome/permit-leave/permit-leave.component';
 import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.component';
 import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
+import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UpdateAttendanceComponent } from './facultyHome/update-attendance/updat
     FacultyAdmitComponent,
     PermitLeaveComponent,
     FacultyHomeComponent,
-    UpdateAttendanceComponent
+    UpdateAttendanceComponent,
+    PermitLetterComponent
   ],
   imports: [
     BrowserModule,

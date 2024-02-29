@@ -103,7 +103,7 @@ export class FacultyService {
 
   // Method to check login credentials
   loginCheck(email: string, password: string, errorMessage: HTMLDivElement) {
-    this.http.get<any>(this.getViewUrl(email), { headers: this.Header }).subscribe(data => {
+    this.http.get<any>(this.getViewUrl(email,"facultylogin"), { headers: this.Header }).subscribe(data => {
       if (data.rows.length === 0) {
         errorMessage.innerHTML = "Enter valid email";
         return;
@@ -127,8 +127,8 @@ export class FacultyService {
   }
 
   // Method to generate the URL for fetching faculty data based on email
-  getViewUrl(email: string): string {
-    return `${this.apiUrl}/_design/views/_view/facultylogin?key="${email}"`;
+  getViewUrl(data: string,view:string): string {
+    return `${this.apiUrl}/_design/views/_view/${view}?key="${data}"`;
   }
 
   getFacultyData():Observable<any>{
@@ -138,5 +138,8 @@ export class FacultyService {
   }
   getFullDocument():Observable<any>{
     return this.http.get<any>(this.baseUrl, { headers: this.Header })
+  }
+  facultyForLetter(data:string='22ca022'){
+    const doc=this.getViewUrl(data,'getFaculty')
   }
 }

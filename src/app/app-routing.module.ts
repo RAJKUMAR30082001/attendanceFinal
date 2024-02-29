@@ -13,6 +13,7 @@ import { FacultyAdmitComponent } from './Admin/faculty-admit/faculty-admit.compo
 import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.component';
 import { PermitLeaveComponent } from './facultyHome/permit-leave/permit-leave.component';
 import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
+import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:"facultyHome",component:FacultyHomeComponent},
   {path:"updateAttendance",component:UpdateAttendanceComponent},
   {path:"permitLeave",component:PermitLeaveComponent},
+  {path:"permitLetter", component:PermitLetterComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }

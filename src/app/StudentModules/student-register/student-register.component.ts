@@ -59,7 +59,9 @@ export class StudentRegisterComponent implements OnInit {
           department: this.registerForm.value.department.toLowerCase(),
           registerNumber: this.registerForm.value.registerNumber,
           email: this.registerForm.value.email,
-          password: this.service.hashedPassword(this.registerForm.value.password)
+          password: this.service.hashedPassword(this.registerForm.value.password),
+          leaveLetter:[],
+          attendanceRecord:[]
         };
 
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);

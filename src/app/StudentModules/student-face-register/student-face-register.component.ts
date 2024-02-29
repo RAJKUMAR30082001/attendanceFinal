@@ -14,6 +14,7 @@ export class StudentFaceRegisterComponent implements OnInit {
   flag:string='notScanned'
   RegisterNumber!:string
   currentYear= new Date().getFullYear();
+  index:number=0
 
   constructor(private render:Renderer2,private faceApi:FaceapiService,private route:ActivatedRoute,private Couch:StudentCouchService){}
 
@@ -32,10 +33,11 @@ export class StudentFaceRegisterComponent implements OnInit {
         this.video.addEventListener('play', async()=>{
           try{
             const results:[]=await this.faceApi.FaceDetection(this.video,this.RegisterNumber)
-            if(results.length>0){
-              // this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
+            if(results.length>0 && this.index===0){
+              this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
               this.flag="scanned"
               this.errorDiv.innerHTML="<strong>Successfully scanned</strong>"
+              this.index++
             }
             else{
               this.errorDiv.innerHTML=`<strong>Do not move until image is scanned</strong>`
