@@ -30,4 +30,15 @@ export interface facultyLogin{
     subjectCode:string
     department:string
     permitted:boolean
+    leavePermission:[]
+}
+
+export interface leaveLetterForm{
+    name:string
+    registerNumber:string
+    department:string
+    subjectCode:string
+    leaveDate:Date
+    reason:string
+    bool:boolean
 }

@@ -8,6 +8,8 @@
   <style>
     body {
       background-color: #f8f9fa;
+      width: 700px;
+      padding-left: 50px;
     }
 
     .leave-form {
@@ -31,30 +33,66 @@
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Enter your name" formControlName="name">
+        <div class="error-message" *ngIf="leaveForm.get('name')!.hasError('required') && leaveForm.get('name')!.touched">
+          Name is required.
+        </div>
+        <div class="error-message" *ngIf="leaveForm.get('name')!.hasError('pattern') && leaveForm.get('name')!.touched">
+          Name must have alphabet only.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="registerNumber" class="form-label">RegisterNumber</label>
+        <input type="text" class="form-control" id="registerNumber" placeholder="Enter your register number" formControlName="registerNumber">
+        <div class="error-message" *ngIf="leaveForm.get('registerNumber')!.hasError('required') && leaveForm.get('registerNumber')!.touched">
+          RegisterNumber is required.
+        </div>
+        <div class="error-message" *ngIf="leaveForm.get('registerNumber')!.hasError('registerNumberError') && leaveForm.get('registerNumber')!.touched">
+          Enter valid RegisterNumber.
+        </div>
+
       </div>
 
       <!-- Department -->
       <div class="mb-3">
         <label for="department" class="form-label">Department</label>
         <input type="text" class="form-control" id="department" placeholder="Enter your department" formControlName="department">
+        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('required') && leaveForm.get('department')!.touched">
+          Department is required.
+        </div>
+        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('pattern') && leaveForm.get('department')!.touched">
+          Department must have alphabet only.
+        </div>
+        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('departmentError') && leaveForm.get('department')!.touched">
+          Enter your department name
+        </div>
       </div>
 
       <!-- Subject Code -->
       <div class="mb-3">
         <label for="subjectCode" class="form-label">Subject Code</label>
         <input type="text" class="form-control" id="subjectCode" placeholder="Enter subject code" formControlName="subjectCode">
+        <div class="error-message" *ngIf="leaveForm.get('subjectCode')!.hasError('required') && leaveForm.get('subjectCode')!.touched">
+          SubjectCode is required.
+        </div>
       </div>
 
       <!-- Leave Date -->
       <div class="mb-3">
         <label for="leaveDate" class="form-label">Leave Date</label>
         <input type="date" class="form-control" id="leaveDate" formControlName="leaveDate">
+        <div class="error-message" *ngIf="leaveForm.get('leaveDate')!.hasError('required') && leaveForm.get('leaveDate')!.touched">
+          Date is required.
+        </div>
+        <div class="error-message" *ngIf="leaveForm.get('leaveDate')!.hasError('invalidDate') && leaveForm.get('leaveDate')!.touched">
+          Date is invalid.
+        </div>
       </div>
 
       <!-- Reason -->
       <div class="mb-3">
         <label for="reason" class="form-label">Reason</label>
         <textarea class="form-control" id="reason" rows="4" placeholder="Enter your leave reason" formControlName="reason"></textarea>
+        <div class="error-message" *ngIf="leaveForm.get('reason')!.hasError('required') && leaveForm.get('reason')!.touched"></div>
       </div>
 
       <!-- Submit Button -->

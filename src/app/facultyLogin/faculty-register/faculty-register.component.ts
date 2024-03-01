@@ -41,7 +41,8 @@ export class FacultyRegisterComponent implements OnInit {
         department:this.facultyForm.value.department?this.facultyForm.value.department.toLowerCase():"",
         subject:this.facultyForm.value.subject?this.facultyForm.value.subject.toLowerCase():"",
         subjectCode:this.facultyForm.value.subjectCode?this.facultyForm.value.subjectCode.toLowerCase():"",
-        permitted:false
+        permitted:false,
+        leavePermission:[]
       }
       
       console.log(this.facultyDetails)

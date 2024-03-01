@@ -77,12 +77,14 @@
             </div>
             <div id="sidebar-buttons">
                 <a href="#" class="sidebar-button">Attendance</a>
-                <a href="#" class="sidebar-button">Leave Letter</a>
+                <a href="#" class="sidebar-button" [routerLink]="['/permitLetter']">Leave Letter</a>
                 <a href="#" (click)="Logout()" class="sidebar-button" id="logout">Logout</a>
             </div>
         </div>
         
-        <!-- Main content goes here -->
+        <div>
+            <app-permit-letter></app-permit-letter>
+        </div>
     </div>
 </body>
 </html>

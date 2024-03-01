@@ -32,17 +32,20 @@ export class StudentFaceRegisterComponent implements OnInit {
         this.video.srcObject = stream;
         this.video.addEventListener('play', async()=>{
           try{
-            const results:[]=await this.faceApi.FaceDetection(this.video,this.RegisterNumber)
-            if(results.length>0 && this.index===0){
-              this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
-              this.flag="scanned"
-              this.errorDiv.innerHTML="<strong>Successfully scanned</strong>"
-              this.index++
-            }
-            else{
-              this.errorDiv.innerHTML=`<strong>Do not move until image is scanned</strong>`
-              this.startVideo()
-            }
+            const results:[]=await this.faceApi.startInterval(this.video,this.RegisterNumber)
+            console.log("results",results);
+            // if(results.length>0 && this.index===0){
+            //   this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
+            //   this.flag="scanned"
+            //   this.errorDiv.innerHTML="<strong>Successfully scanned</strong>"
+            //   this.index++
+            // }
+            // else{ 
+            //   if(this.index===0){
+            //   this.errorDiv.innerHTML=`<strong>Do not move until image is scanned</strong>`
+            //   this.startVideo()
+            // }
+            // }
          
         }catch(error){
           console.log(error)

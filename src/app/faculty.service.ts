@@ -139,7 +139,8 @@ export class FacultyService {
   getFullDocument():Observable<any>{
     return this.http.get<any>(this.baseUrl, { headers: this.Header })
   }
-  facultyForLetter(data:string='22ca022'){
+  facultyForLetter(data:string='22ca022'):Observable<any>{
     const doc=this.getViewUrl(data,'getFaculty')
+    return this.http.get<any>(doc,{headers:this.Header})
   }
 }
