@@ -61,6 +61,7 @@
       <th>Department</th>
       <th>Leave Date</th>
       <th>Reason</th>
+      <th>Action</th>
     </tr>
     <tr *ngFor="let i of requestLetters">
       <td>{{i.name}}</td>
@@ -68,14 +69,17 @@
       <td>{{i.department}}</td>
       <td>{{i.leaveDate}}</td>
       <td>{{i.reason}}</td>
+      <td>
+        <div class="buttons">
+          <button class="button" (click)="approvePermission(i.registerNumber,i)">Approve</button>
+          <button class="button button-delete" (click)="rejectPermission(i)">Reject</button>
+        </div>
+      </td>
       
     </tr>
   </table>
 
-  <div class="buttons">
-    <button class="button">Approve</button>
-    <button class="button button-delete">Reject</button>
-  </div>
+  
 
 </body>
 </html>
