@@ -14,11 +14,12 @@ export class FaceapiService {
   public resize: any;
   public canva: any;
   public timeInterval: any;
+ 
 
   constructor() { }
 
-  async FaceDetection(video: HTMLVideoElement, registerNumber: string): Promise<any> {
-    console.log("coming");
+  async FaceDetection(video: HTMLVideoElement, registerNumber: string,divElement:HTMLDivElement): Promise<any> {
+    divElement.innerHTML="Don't move util face have been scanned"
 
     try {
       await Promise.all([
@@ -59,14 +60,15 @@ export class FaceapiService {
 
     if (labeledDescriptors.length > 0) {
       this.clearIntervalTimer();
+      divElement.innerHTML="face scanned successfully"
     }
     return labeledDescriptors;
   }
 
-  startInterval(video: HTMLVideoElement, registerNumber: string): Promise<any> {
+  startInterval(video: HTMLVideoElement, registerNumber: string,divTag:HTMLDivElement): Promise<any> {
     return new Promise((resolve) => {
       this.timeInterval = setInterval(async () => {
-        const labeledDescriptors = await this.FaceDetection(video, registerNumber);
+        const labeledDescriptors = await this.FaceDetection(video, registerNumber,divTag);
         resolve(labeledDescriptors);
       }, 1000); // Adjust the interval duration as needed
     });

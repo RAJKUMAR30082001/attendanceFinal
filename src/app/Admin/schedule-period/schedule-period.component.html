@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Codes Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button + button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div *ngIf="!periodFlag"></div>
+<form [formGroup]="subjectCode">
+    <label for="subjectCode1">Subject Code 1:</label>
+    <input type="text" id="subjectCode1" name="subjectCode1" formControlName="subjectCode1" placeholder="Enter subject code">
+    <div *ngIf="subjectCode.get('subjectCode1')!.hasError('required') && subjectCode.get('subjectCode1')!.touched">
+        Subject Code 1 is required.
+    </div>
+
+    <label for="subjectCode2">Subject Code 2:</label>
+    <input type="text" id="subjectCode2" name="subjectCode2" formControlName="subjectCode2"  placeholder="Enter subject code">
+    <div *ngIf="subjectCode.get('subjectCode2')!.hasError('required') && subjectCode.get('subjectCode2')!.touched">
+        Subject Code 2 is required.
+    </div>
+
+    <label for="subjectCode3">Subject Code 3:</label>
+    <input type="text" id="subjectCode3" name="subjectCode3" formControlName="subjectCode3"  placeholder="Enter subject code">
+    <div *ngIf="subjectCode.get('subjectCode3')!.hasError('required') && subjectCode.get('subjectCode3')!.touched">
+        Subject Code 3 is required.
+    </div>
+
+    <label for="subjectCode4">Subject Code 4:</label>
+    <input type="text" id="subjectCode4" name="subjectCode4" formControlName="subjectCode4"  placeholder="Enter subject code">
+    <div *ngIf="subjectCode.get('subjectCode4')!.hasError('required') && subjectCode.get('subjectCode4')!.touched">
+        Subject Code 4 is required.
+    </div>
+
+    <label for="subjectCode5">Subject Code 5:</label>
+    <input type="text" id="subjectCode5" name="subjectCode5" formControlName="subjectCode5"  placeholder="Enter subject code">
+    <div *ngIf="subjectCode.get('subjectCode5')!.hasError('required') && subjectCode.get('subjectCode5')!.touched">
+        Subject Code 5 is required.
+    </div>
+
+    <button type="button" (click)="updateSubjectCodes()">Update</button>
+    <button type="button" [disabled]="periodFlag" (click)="nextPage()">Next</button>
+</form>
+
+    <div *ngIf="attendanceFlag" class="displaySubject">
+        <div *ngIf="currentDay<4">
+        <form [formGroup]="periodForm">
+            <h3>{{getDay()}}</h3>
+            <label for="subjectName">Subject Name:</label>
+            <input type="text" id="subjectName" name="subjectName" formControlName="subjectName" required placeholder="Enter subjectName">
+
+            <label for="subjectCode">Subject Code:</label>
+            <input type="text" id="subjectCode" name="subjectCode" formControlName="subjectCode" required placeholder="Enter subjectCode">
+
+            <label for="startTiming">Start Timing:</label>
+            <input type="text" id="startTiming" name="startTiming" formControlName="startTiming" required placeholder="Enter timing">
+
+            <label for="endTiming">End Timing:</label>
+            <input type="text" id="endTiming" name="endTiming" formControlName="endTiming" required>
+
+            <button type="button" (click)="next()">Next</button>
+        </form>
+    </div>
+    </div>
+    
+</body>
+</html>
+

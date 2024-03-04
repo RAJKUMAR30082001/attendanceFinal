@@ -56,5 +56,9 @@ export class AdminService implements CanActivate{
     return this.http.get<any>(this.baseUrl, { headers: this.Auth })
   }
   
-  
+  updateAdmin(doc:any){
+    this.http.put<any>(this.baseUrl,doc,{headers:this.Auth}).subscribe(data=>{
+      console.log("successfully updated")
+    })
+  }
 }

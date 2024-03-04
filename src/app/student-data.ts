@@ -42,3 +42,11 @@ export interface leaveLetterForm{
     reason:string
     bool:boolean
 }
+
+
+export interface periodWiseData{
+    subjectName:string
+    subjectCode:string
+    startTime:string
+    endTime:string
+}

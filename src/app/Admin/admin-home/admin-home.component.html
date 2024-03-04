@@ -62,19 +62,7 @@
             padding-left: 20px;
             padding-right: 20px;
         }
-        .HoverEffect{
-            background-color: #f9e212;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 10px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        
+       
     </style>
 </head>
 <body>
@@ -84,14 +72,17 @@
                <p>Admin Panel</p>
             </div>
             <div id="sidebar-buttons">
-                <a class="sidebar-button" (click)="FacultyAdmit($event)" *ngIf="studentData" class="HoverEffect">Faculty Admit</a>
-                <a href="#" class="sidebar-button">Timetable Update</a>
+                <a class="sidebar-button" (click)="FacultyAdmit($event)">Faculty Admit</a>
+                <a class="sidebar-button" (click)="Timetable($event)">Timetable Schedule</a>
                 <a href="" class="sidebar-button">Holiday Update</a>
                 <a href="#" class="sidebar-button" id="logout" (click)="Logout()">Logout</a>
             </div>
         </div>
         <div *ngIf="studentData">
             <app-faculty-admit></app-faculty-admit>
+        </div>
+        <div *ngIf="timetable">
+            <app-schedule-period></app-schedule-period>
         </div>
         <!-- Main content goes here -->
     </div>

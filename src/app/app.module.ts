@@ -17,6 +17,7 @@ import { PermitLeaveComponent } from './facultyHome/permit-leave/permit-leave.co
 import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.component';
 import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
 import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter.component';
+import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter
     PermitLeaveComponent,
     FacultyHomeComponent,
     UpdateAttendanceComponent,
-    PermitLetterComponent
+    PermitLetterComponent,
+    SchedulePeriodComponent
   ],
   imports: [
     BrowserModule,

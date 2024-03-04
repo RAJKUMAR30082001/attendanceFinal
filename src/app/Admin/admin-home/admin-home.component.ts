@@ -16,6 +16,7 @@ export class AdminHomeComponent implements OnInit{
   data!:any
   studentData:boolean=false
   facultyData!:boolean
+  timetable:boolean=false
   constructor(private check:CheckValidityService,private adminService:AdminService,private route:Router){}
   ngOnInit(): void {
     this.auth=this.check.getAuth()
@@ -29,6 +30,12 @@ export class AdminHomeComponent implements OnInit{
   FacultyAdmit(event:Event){
     event.preventDefault()
     this.studentData=true
+    this.timetable=false
+  }
+  Timetable(event:Event){
+    event.preventDefault()
+    this.studentData=false
+    this.timetable=true
   }
   
 
