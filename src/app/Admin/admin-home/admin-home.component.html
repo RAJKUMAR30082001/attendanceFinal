@@ -74,7 +74,8 @@
             <div id="sidebar-buttons">
                 <a class="sidebar-button" (click)="FacultyAdmit($event)">Faculty Admit</a>
                 <a class="sidebar-button" (click)="Timetable($event)">Timetable Schedule</a>
-                <a href="" class="sidebar-button">Holiday Update</a>
+                <a href="" class="sidebar-button" (click)="holidayUpdate($event)">Holiday Update</a>
+                <a href="" class="sidebar-button" (click)="removeStudent($event)">Remove Student</a>
                 <a href="#" class="sidebar-button" id="logout" (click)="Logout()">Logout</a>
             </div>
         </div>
@@ -83,6 +84,12 @@
         </div>
         <div *ngIf="timetable">
             <app-schedule-period></app-schedule-period>
+        </div>
+        <div *ngIf="remove">
+            <app-remove-student></app-remove-student>
+        </div>
+        <div *ngIf="holiday">
+            <app-holiday-input></app-holiday-input>
         </div>
         <!-- Main content goes here -->
     </div>

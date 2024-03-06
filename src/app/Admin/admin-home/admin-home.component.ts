@@ -17,6 +17,8 @@ export class AdminHomeComponent implements OnInit{
   studentData:boolean=false
   facultyData!:boolean
   timetable:boolean=false
+  remove:boolean=false
+  holiday:boolean=false
   constructor(private check:CheckValidityService,private adminService:AdminService,private route:Router){}
   ngOnInit(): void {
     this.auth=this.check.getAuth()
@@ -31,11 +33,30 @@ export class AdminHomeComponent implements OnInit{
     event.preventDefault()
     this.studentData=true
     this.timetable=false
+    this.remove=false
+    this.holiday=false
   }
   Timetable(event:Event){
     event.preventDefault()
     this.studentData=false
+    this.remove=false
+    this.holiday=false
     this.timetable=true
+    
+  }
+  removeStudent(event:Event){
+    event.preventDefault()
+    this.studentData=false
+    this.timetable=false
+    this.holiday=false
+    this.remove=true
+  }
+  holidayUpdate(event:Event){
+    event.preventDefault()
+    this.studentData=false
+    this.timetable=false
+    this.remove=false
+    this.holiday=true
   }
   
 

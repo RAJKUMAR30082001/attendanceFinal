@@ -45,7 +45,8 @@
     </style>
 </head>
 <body>
-    <div *ngIf="!periodFlag"></div>
+    <div class="errorMessage"></div>
+   <div *ngIf="formFlag">
 <form [formGroup]="subjectCode">
     <label for="subjectCode1">Subject Code 1:</label>
     <input type="text" id="subjectCode1" name="subjectCode1" formControlName="subjectCode1" placeholder="Enter subject code">
@@ -78,27 +79,48 @@
     </div>
 
     <button type="button" (click)="updateSubjectCodes()">Update</button>
-    <button type="button" [disabled]="periodFlag" (click)="nextPage()">Next</button>
+    <button type="button" (click)="nextPage()">Next</button>
 </form>
+</div> 
 
     <div *ngIf="attendanceFlag" class="displaySubject">
         <div *ngIf="currentDay<4">
-        <form [formGroup]="periodForm">
-            <h3>{{getDay()}}</h3>
-            <label for="subjectName">Subject Name:</label>
-            <input type="text" id="subjectName" name="subjectName" formControlName="subjectName" required placeholder="Enter subjectName">
-
-            <label for="subjectCode">Subject Code:</label>
-            <input type="text" id="subjectCode" name="subjectCode" formControlName="subjectCode" required placeholder="Enter subjectCode">
-
-            <label for="startTiming">Start Timing:</label>
-            <input type="text" id="startTiming" name="startTiming" formControlName="startTiming" required placeholder="Enter timing">
-
-            <label for="endTiming">End Timing:</label>
-            <input type="text" id="endTiming" name="endTiming" formControlName="endTiming" required>
-
-            <button type="button" (click)="next()">Next</button>
-        </form>
+            <form [formGroup]="periodForm">
+                <h3>{{ getDay() }}</h3>
+              
+                <label for="subjectName">Subject Name:</label>
+                <input type="text" id="subjectName" name="subjectName" formControlName="subjectName" placeholder="Enter subjectName">
+                <div *ngIf="periodForm.get('subjectName')!.hasError('required') && periodForm.get('subjectName')!.touched">
+                  Subject Name is required.
+                </div>
+              
+                <label for="subjectCode">Subject Code:</label>
+                <input type="text" id="subjectCode" name="subjectCode" formControlName="subjectCode" placeholder="Enter subjectCode">
+                <div *ngIf="periodForm.get('subjectCode')!.hasError('required') && periodForm.get('subjectCode')!.touched">
+                  Subject Code is required.
+                </div>
+              
+                <label for="startTiming">Start Timing:</label>
+                <input type="text" id="startTiming" name="startTiming" formControlName="startTiming" placeholder="hh:mm am/pm">
+                <div *ngIf="periodForm.get('startTiming')!.hasError('required') && periodForm.get('startTiming')!.touched">
+                  Start Timing is required.
+                </div>
+                <div *ngIf="periodForm.get('startTiming')!.hasError('pattern') && periodForm.get('startTiming')!.touched">
+                  Invalid time format. Please enter a valid time in hh:mm am/pm format.
+                </div>
+              
+                <label for="endTiming">End Timing:</label>
+                <input type="text" id="endTiming" name="endTiming" formControlName="endTiming" placeholder="hh:mm Am/Pm">
+                <div *ngIf="periodForm.get('endTiming')!.hasError('required') && periodForm.get('endTiming')!.touched">
+                  End Timing is required.
+                </div>
+                <div *ngIf="periodForm.get('endTiming')!.hasError('pattern') && periodForm.get('endTiming')!.touched">
+                  Invalid time format. Please enter a valid time in hh:mm am/pm format.
+                </div>
+              
+                <button type="button" [disabled]="periodForm.invalid" (click)="next()">Next</button>
+              </form>
+              
     </div>
     </div>
     

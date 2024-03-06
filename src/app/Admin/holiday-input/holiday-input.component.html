@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .date-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Date Input Container</title>
+</head>
+<body>
+
+<div class="date-container">
+    <div class="errorMessage" *ngIf="errorMes" >{{errorMes}}</div>
+    <label for="month">Select Month:</label>
+    <select id="month" (change)="selectedMonth($event)" required>
+        <!-- Add your month options dynamically or manually -->
+        
+            <option value="">Select Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        
+        
+    </select>
+
+    <label for="dates">Enter Dates:</label>
+    <input type="date" id="dates" placeholder="Select Holiday dates" multiple (input)="enteredDates($event)">
+
+    <button (click)="addDates()">Add</button>
+    <button onclick="updateDates()">Update</button>
+    <button onclick="deleteDates()">Delete</button>
+</div>
+
+
+</body>
+</html>
+

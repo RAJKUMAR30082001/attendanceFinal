@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { StudentRegisterComponent } from './StudentModules/student-register/student-register.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { StudentLoginComponent } from './StudentModules/student-login/student-login.component';
 import { StudentFaceRegisterComponent } from './StudentModules/student-face-register/student-face-register.component';
 import { StudenthomepageComponent } from './studentHome/studenthomepage/studenthomepage.component';
@@ -18,6 +18,8 @@ import { FacultyHomeComponent } from './facultyHome/faculty-home/faculty-home.co
 import { UpdateAttendanceComponent } from './facultyHome/update-attendance/update-attendance.component';
 import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter.component';
 import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period.component';
+import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
+import { HolidayInputComponent } from './Admin/holiday-input/holiday-input.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +37,16 @@ import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period
     FacultyHomeComponent,
     UpdateAttendanceComponent,
     PermitLetterComponent,
-    SchedulePeriodComponent
+    SchedulePeriodComponent,
+    RemoveStudentComponent,
+    HolidayInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

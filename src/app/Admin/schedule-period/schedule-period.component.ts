@@ -13,9 +13,9 @@ export class SchedulePeriodComponent implements OnInit{
   public period = [];
   public periodFlag:boolean=false
   public divElement!:HTMLDivElement
-  public flag=true
+  public flag:boolean=true
   public subjectCode!:FormGroup
-  public attendanceFlag!:false
+  public attendanceFlag:boolean=false
   public periodForm!:FormGroup
   public dayWisePeriod={}
   public periods:periodWiseData[]=[]
@@ -23,36 +23,43 @@ export class SchedulePeriodComponent implements OnInit{
   public currentDay:number=0
   public periodCount:number=1
   public days:string[]=[]
+  public formFlag:boolean=true
+  public error!:HTMLDivElement
   constructor(private check:CheckValidityService,private render:Renderer2,private fb:FormBuilder,private adminService:AdminService) { }
   ngOnInit(): void {
     this.period=this.check.getData().subjectCode
     console.log(this.period)
+    this.initializeCodeForm()
     if(this.period.length>0){
       this.periodFlag=true
+      this.flag=false
     }
-    this.subjectCode=this.fb.group({
-      subjectCode1:['',[Validators.required]],
-      subjectCode2:['',[Validators.required]],
-      subjectCode3:['',[Validators.required]],
-      subjectCode4:['',[Validators.required]],
-      subjectCode5:['',[Validators.required]],
-})
+    else{
+    this.error=this.render.selectRootElement(".errorMessage")
+    this.error.innerHTML= "Please add a Subject code first."
+   }
 }
   updateSubjectCodes(){
-    this.periodFlag=false
+    this.periodFlag=true
   }
   nextPage(){
+    if(this.error){
+    this.error.innerHTML=""
+  }
+    if(this.flag){
     this.adminService.getUrl().subscribe(data=>{
-      let arrayData=data.subjectCode
-      arrayData=Object.values(this.subjectCode.value)
-      data.subjectCode=arrayData
+      
+      data.subjectCode=Object.values(this.subjectCode.value)
+      
       this.adminService.updateAdmin(data)
     })
-    this.displaySubject=true
-    
+  }
+    this.attendanceFlag=true
+    this.formFlag=false
+    this.initializeForm()
   }
   getDay():string{
-    this.initializeForm()
+   
     this.days=['monday','tuesday','wednesday','thursday','friday']
     return this.days[this.currentDay]
     
@@ -61,37 +68,51 @@ export class SchedulePeriodComponent implements OnInit{
     let details:periodWiseData={
       subjectName:this.periodForm.value.subjectName?this.periodForm.value.subjectName.toLowerCase():'',
       subjectCode:this.periodForm.value.subjectCode?this.periodForm.value.subjectCode.toLowerCase():'',
-      startTime:this.periodForm.value.startTime,
-      endTime:this.periodForm.value.endTime
+      startTime:this.periodForm.value.startTiming?this.periodForm.value.startTiming.toLowerCase():'',
+      endTime:this.periodForm.value.endTiming?this.periodForm.value.endTiming.toLowerCase():''
 
     }
     this.periodForm.reset()
-    if(this.periodCount>4){
+    if(this.periodCount===2){
       this.dayWisePeriod={
         [this.days[this.currentDay]]:this.periods
       }
+      console.log(this.dayWisePeriod)
       this.adminService.getUrl().subscribe(data=>{
         data.schedule.push(this.dayWisePeriod)
         this.adminService.updateAdmin(data)
       })
       this.currentDay++
       this.periods=[]
+      this.periodCount=1
       
     }
     else{
      
       this.periodCount++
       this.periods.push(details);
+      console.log(this.periods)
     }
+    console.log(this.periodCount)
 
   }
   initializeForm(){
     this.periodForm=this.fb.group({
       subjectName:['',Validators.required],
       subjectCode:['',Validators.required],
-      startTiming:['',Validators.required],
-      endTiming:['',Validators.required]
+      startTiming: ['', [Validators.required, Validators.pattern(/^(0\d|1[0-2]):[0-5]\d (AM|PM)$/i)]],
+      endTiming:['',[Validators.required,Validators.pattern(/^(0\d|1[0-2]):[0-5]\d (AM|PM)$/i)]]
     })
   }
+  initializeCodeForm(){
+    this.subjectCode=this.fb.group({
+      subjectCode1:['',[Validators.required]],
+      subjectCode2:['',[Validators.required]],
+      subjectCode3:['',[Validators.required]],
+      subjectCode4:['',[Validators.required]],
+      subjectCode5:['',[Validators.required]],
+})
+  }
+
 
 }
