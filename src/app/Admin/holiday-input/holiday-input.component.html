@@ -56,13 +56,13 @@
         
         
     </select>
-
+   
     <label for="dates">Enter Dates:</label>
     <input type="date" id="dates" placeholder="Select Holiday dates" multiple (input)="enteredDates($event)">
-
+    
     <button (click)="addDates()">Add</button>
-    <button onclick="updateDates()">Update</button>
-    <button onclick="deleteDates()">Delete</button>
+    <button (click)="updateDates()">Update</button>
+    <button (click)="deleteDates()">Delete</button>
 </div>
 
 

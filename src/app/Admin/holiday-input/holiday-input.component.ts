@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AdminService } from 'src/app/admin.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { AdminService } from 'src/app/admin.service';
   styleUrls: ['./holiday-input.component.scss']
 })
 export class HolidayInputComponent implements OnInit {
+  public flag:boolean=false
   public year= new Date().getFullYear();
   public dates: string[] = [];
   public month:string=''
@@ -29,10 +30,13 @@ export class HolidayInputComponent implements OnInit {
     "December"
 ];
 
-  constructor(private render:Renderer2,private admin:AdminService){}
+
+  constructor(private admin:AdminService){}
   ngOnInit(): void {
     this.admin.getUrl().subscribe(data=>{
-      this.arrayOfMonths=Object.keys(data.holiday)
+    data.holiday.forEach((element: any) => {
+      this.arrayOfMonths.push(Object.keys(element)[0])
+    });
     })
   }
   enteredDates(event:Event){
@@ -46,6 +50,7 @@ export class HolidayInputComponent implements OnInit {
   }
   selectedMonth(event:Event){
     this.month=(event.target as HTMLSelectElement).value;
+    console.log(this.month,"i am month")
   }
 
   validate(date:string):boolean{
@@ -61,36 +66,103 @@ export class HolidayInputComponent implements OnInit {
         
         return false
       }
-      
         return true
-     
-      
-    }
+      }
     else{
       this.errorMes="Select the month"
       return false
     }
   }
-  check(date:string):boolean{
-    if(new Date(date).getTime()<new Date().getTime()){
-      this.errorMes="Date already passed"
-      return false
+  check(dates: string[]): boolean {
+    // Use Array.every to check if all dates are valid
+    const allDatesValid = dates.every((element) => {
+      return new Date(element).getTime() >= new Date().getTime();
+    });
+  
+    if (!allDatesValid) {
+      this.errorMes = "Date already passed";
     }
-    else{
-      return true
-    }
+  
+    // Return the result of the check
+    return allDatesValid;
   }
   addDates(){
+
+    console.log(this.arrayOfMonths,this.month)
     if(this.arrayOfMonths.includes(this.month)){
+      
       this.errorMes="Month already exist if any modification please update"
     }
     else{
       this.admin.getUrl().subscribe(data=>{
-        data.holiday={
-          [this.month]:this.dates
+        let array={
+          [this.month]: this.dates
         }
+        data.holiday.push(array)
         this.admin.updateAdmin(data)
       })
     }
+    this.clearData()
+
   }
+  updateDates(){
+    
+    if (this.arrayOfMonths.includes(this.month)) {
+      if (this.check(this.dates)) {
+        this.admin.getUrl().subscribe(data => {
+          data.holiday.forEach((element: any) => {
+            const currentMonth = Object.keys(element)[0];
+            
+            if (currentMonth === this.month && !this.flag) {
+              
+              this.dates.forEach((date: string) => {
+
+                element[currentMonth].push(date);
+              });
+  
+              element[currentMonth] = [...new Set(element[currentMonth])];
+            }
+            else if(this.flag && currentMonth === this.month){
+              this.dates.forEach((date: string) => {
+                const index = element[currentMonth].indexOf(date);
+                if (index !== -1) {
+                  element[currentMonth].splice(index, 1);
+                }
+              });
+              this.flag=false
+            }
+          });
+  
+          this.admin.updateAdmin(data);
+          this.clearData()
+        });
+      }
+    }
+  else{
+   
+    this.errorMes="Month did not exist"
+    this.clearData()
+  }
+
+  
+  
+  }
+  clearData(){
+    const datesInput = document.getElementById('dates') as HTMLInputElement;
+    const monthSelect = document.getElementById('month') as HTMLSelectElement;
+
+    if (datesInput) {
+      datesInput.value = '';
+    }
+    if (monthSelect) {
+      monthSelect.value = '';
+    }
+    this.month=''
+    this.dates=[]
+  }
+
+  deleteDates(){
+    this.flag=true
+  }
+  
 }
