@@ -16,6 +16,7 @@ export class HolidayInputComponent implements OnInit {
   public arrayOfMonths:string[]=[]
   public value:string=''
   public months:string[] = [
+    "Select Month",
     "January",
     "February",
     "March",
@@ -74,7 +75,7 @@ export class HolidayInputComponent implements OnInit {
     }
   }
   check(dates: string[]): boolean {
-    // Use Array.every to check if all dates are valid
+   
     const allDatesValid = dates.every((element) => {
       return new Date(element).getTime() >= new Date().getTime();
     });
@@ -83,7 +84,7 @@ export class HolidayInputComponent implements OnInit {
       this.errorMes = "Date already passed";
     }
   
-    // Return the result of the check
+    
     return allDatesValid;
   }
   addDates(){

@@ -136,16 +136,16 @@ export class StudentCouchService {
     return hashedPassword;
   }
 
-  // getAdminRequiredData(): Observable<any> {
-  //   return this.getFullDocument().pipe(
-  //     map(data => data[this.year]),
-  //     catchError(error => {
-  //       // Handle the error if needed
-  //       console.error('Error fetching admin data:', error);
-  //       return of(null); 
-  //     })
-  //   );
-  // }
+  getRequiredData(): Observable<any> {
+    return this.getFullDocument().pipe(
+      map(data => data[this.year]),
+      catchError(error => {
+        // Handle the error if needed
+        console.error('Error fetching admin data:', error);
+        return of(null); 
+      })
+    );
+  }
 
   
 }

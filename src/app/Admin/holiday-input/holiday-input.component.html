@@ -37,22 +37,10 @@
 <div class="date-container">
     <div class="errorMessage" *ngIf="errorMes" >{{errorMes}}</div>
     <label for="month">Select Month:</label>
-    <select id="month" (change)="selectedMonth($event)" required>
+    <select id="month" (change)="selectedMonth($event)" required *ngIf="let i of months">
         <!-- Add your month options dynamically or manually -->
         
-            <option value="">Select Month</option>
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
+            <option value="{{i}}">{{i}}</option>
         
         
     </select>

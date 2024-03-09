@@ -1,1 +1,157 @@
-<p>update-attendance works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Attendance</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    #filterInput {
+      padding: 8px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+
+    #filterButton {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* Adjust the width of the Reason column */
+    td:nth-child(6) {
+      width: 30%;
+      word-wrap: break-word; /* Allow content to wrap to the next line */
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button-delete {
+      background-color: #f44336;
+    }
+    .flash-container {
+      display: none;
+      background-color: #f2f2f2;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .flash-container input {
+      margin-bottom: 8px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .flash-container button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Update Attendance</h2>
+
+  <label for="filterInput">Filter by Register Number:</label>
+  <input type="text" id="filterInput" placeholder="Enter register number">
+  <button id="filterButton" (click)="filterTable()">Filter</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Register Number</th>
+        <th>Department</th>
+        <th>Percentage</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!flag; else filteredRow">
+        <tr *ngFor="let i of displayStudent; let j = index">
+          <td>{{i.firstName}}</td>
+          <td>{{i.registerNumber}}</td>
+          <td>{{i.department}}</td>
+          <td>{{percentage[j]}}</td>
+          <td>
+            <div class="buttons">
+              <button class="button" (click)="updateAttendance(i.registerNumber)">Update</button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #filteredRow>
+        <tr>
+          <td>{{filteredValue.firstName}}</td>
+          <td>{{filteredValue.registerNumber}}</td>
+          <td>{{filteredValue.department}}</td>
+          <td>{{percentageValue}}</td>
+          <td>
+            <div class="buttons">
+              <button class="button" (click)="updateAttendance(filteredValue.registerNumber)">Update</button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="flash-container" id="flash-container" *ngIf="showUpdateContainer">
+    <input type="text" name="newAttendance" id="newAttendance" value="newAttendance" placeholder="Enter Attendance"/><br/>
+    <button class="button" (click)="confirmUpdate()">Update</button>
+  </div>
+
+
+</body>
+</html>
