@@ -75,6 +75,7 @@ export class StudentCouchService {
   }
 
   updateDocument(data: any) {
+    
     this.http.put(this.baseURL, data, { headers: this.getHeader() }).subscribe(
         (response: any) => {
           console.log('Student details added/updated successfully:', response);

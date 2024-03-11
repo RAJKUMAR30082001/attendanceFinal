@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CheckValidityService } from 'src/app/check-validity.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
 import { StudentData, facultyLogin } from 'src/app/student-data';
@@ -8,7 +8,7 @@ import { StudentData, facultyLogin } from 'src/app/student-data';
   templateUrl: './update-attendance.component.html',
   styleUrls: ['./update-attendance.component.scss']
 })
-export class UpdateAttendanceComponent implements OnInit {
+export class UpdateAttendanceComponent implements OnInit, AfterViewChecked {
   public details!:facultyLogin
   public flag:boolean=false
   public displayStudent:StudentData[]=[]
@@ -18,27 +18,48 @@ export class UpdateAttendanceComponent implements OnInit {
   public percentageValue!:number
   public filteredValue!:any
   public showUpdateContainer:boolean = false;
-  constructor (private stdService:StudentCouchService,private check:CheckValidityService,private render:Renderer2) {}
+  public showTable:boolean=true
+  public regNo:string=''
+  public currentPercentage!:number
+  public errorMessage!:string
+  public inputValue!:number
+  constructor (private stdService:StudentCouchService,private check:CheckValidityService,private render:Renderer2,private cdr:ChangeDetectorRef) {}
+  @ViewChild('flashContainer', { static: false }) flashContainer!: ElementRef;
+
   ngOnInit(): void {
     this.details=this.check.getData()
     this.subjectCode=this.details.subjectCode
     this.getDetails()
+   
   }
-  updateAttendance(regNo:string){
-    this.showUpdateContainer=true
-    let flashContainer=this.render.selectRootElement("#flash-container") as HTMLDivElement
-    console.log(flashContainer)
-    // flashContainer.style.display="block"
+  ngAfterViewChecked(): void {
+    if (this.flashContainer && this.flashContainer.nativeElement) {
+      console.log('Flash Container:', this.flashContainer.nativeElement);
+      this.flashContainer.nativeElement.style.display="block"
+    }
+  }
+  
 
+  updateAttendance(regNo:string, currentPercentage:number){
+    this.regNo=regNo
+    this.currentPercentage=currentPercentage
+    this.showUpdateContainer=true
+    this.showTable=false
+    console.log("yes detect changes")
+    this.cdr.detectChanges();
   }
-  obtainPercentage(value: any):any {
+  
+  obtainPercentage(value: any, updateFlag?:boolean):any {
     const attendanceRecord = value.attendanceRecord;
   
     const targetObject = attendanceRecord.find((record: { [key: string]: number }) =>
     record.hasOwnProperty(this.subjectCode)
   );
-
-    if (targetObject) {
+    if(targetObject && updateFlag){
+      targetObject[this.subjectCode]=this.inputValue
+      return(value)
+    }
+    else if (targetObject) {
       this.percentageValue = targetObject[this.subjectCode];
       console.log(this.percentageValue)
       this.percentage.push(this.percentageValue);
@@ -52,12 +73,21 @@ export class UpdateAttendanceComponent implements OnInit {
     
   }
   getDetails(){
+    this.errorMessage=''
     this.stdService.getRequiredData().subscribe(data=>{
       let key=Object.keys(data);
+      console.log(this.displayStudent)
       this.displayStudent=key.map(i=>{
         if(this.flag && i===this.elementValue){
           this.filteredValue=data[i]
           this.obtainPercentage(data[i])
+        }
+        else if(this.showUpdateContainer && i===this.regNo){
+          console.log(data[i],"before")
+          data[i]=this.obtainPercentage(data[i],this.showUpdateContainer)
+          console.log(data[i])
+          
+          this.stdService.updateDocument(data)
         }
         else{
         this.obtainPercentage(data[i])
@@ -66,7 +96,34 @@ export class UpdateAttendanceComponent implements OnInit {
       })
     })
   }
+  
+confirmUpdate(){
+  
+  this.errorMessage=""
+  this.inputValue=Number((document.getElementById("newAttendance") as HTMLInputElement)?.value)
+  
+  if(this.checkNumber(this.inputValue,this.currentPercentage)){
+    this.getDetails()
+    this.errorMessage="updated successfully"
+    
+    // this.showUpdateContainer=false
+    
+    
+  //   setTimeout(()=>{
+  //     this.flag=false
+  //     this.showTable=true
+  //     this.getDetails()
+    
+  // },2000)
 
-confirmUpdate(){}
+  }
+}
+checkNumber(value:any,percentage:number):boolean{
+  if(isNaN(value) || value>100 || value<0 || value<percentage ){
+    this.errorMessage="Enter valid percentage value"
+    return false
+  }
+  return true
+}
   
 }

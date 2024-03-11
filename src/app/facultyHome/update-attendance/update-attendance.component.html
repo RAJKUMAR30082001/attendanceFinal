@@ -107,7 +107,7 @@
   <label for="filterInput">Filter by Register Number:</label>
   <input type="text" id="filterInput" placeholder="Enter register number">
   <button id="filterButton" (click)="filterTable()">Filter</button>
-
+<div *ngIf="showTable">
   <table>
     <thead>
       <tr>
@@ -127,7 +127,7 @@
           <td>{{percentage[j]}}</td>
           <td>
             <div class="buttons">
-              <button class="button" (click)="updateAttendance(i.registerNumber)">Update</button>
+              <button class="button" (click)="updateAttendance(i.registerNumber,percentage[j])">Update</button>
             </div>
           </td>
         </tr>
@@ -140,15 +140,18 @@
           <td>{{percentageValue}}</td>
           <td>
             <div class="buttons">
-              <button class="button" (click)="updateAttendance(filteredValue.registerNumber)">Update</button>
+              <button class="button" (click)="updateAttendance(filteredValue.registerNumber,percentageValue)">Update</button>
             </div>
           </td>
         </tr>
       </ng-template>
     </tbody>
   </table>
-  <div class="flash-container" id="flash-container" *ngIf="showUpdateContainer">
-    <input type="text" name="newAttendance" id="newAttendance" value="newAttendance" placeholder="Enter Attendance"/><br/>
+</div>
+  <div #flashContainer class="flash-container" id="flash-container" *ngIf="showUpdateContainer">
+    <p>Enter Percentage to updateAttendance for {{regNo}}</p>
+    <input type="text" name="newAttendance" id="newAttendance"  placeholder="Enter Attendance"/><br/>
+    <div>{{errorMessage}}</div>
     <button class="button" (click)="confirmUpdate()">Update</button>
   </div>
 
