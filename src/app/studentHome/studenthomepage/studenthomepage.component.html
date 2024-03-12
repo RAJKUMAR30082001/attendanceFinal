@@ -62,9 +62,18 @@
     padding-left: 20px;
     padding-right: 20px;
 }
-        #logout{
-            margin-top: 200px;
-        }
+#logout{
+    margin-top: 200px;
+}
+.notification-mark{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: 5px; /* Adjust as needed */
+    
+}
     </style>
 </head>
 <body>
@@ -76,14 +85,21 @@
                 <p>Department: {{userDetails['department']}}</p>
             </div>
             <div id="sidebar-buttons">
-                <a href="#" class="sidebar-button">Attendance</a>
-                <a href="#" class="sidebar-button" [routerLink]="['/permitLetter']">Leave Letter</a>
+                <a href="#" class="sidebar-button" (click)="attendance($event)">Attendance</a>
+                <a href="#" class="sidebar-button" (click)="leaveLetter($event)">Leave Letter</a>
+                <a href="" class="sidebar-button" (click)="notification($event)">Notification
+                    <span class="notification-mark"  *ngIf="redMark"></span>
+                </a>
                 <a href="#" (click)="Logout()" class="sidebar-button" id="logout">Logout</a>
             </div>
         </div>
         
-        <div>
+        <div *ngIf="leaveLetterFlag">
             <app-permit-letter></app-permit-letter>
+        </div>
+        <div *ngIf="attendanceFlag"></div>
+        <div *ngIf="notificationFlag">
+            <app-notification></app-notification>
         </div>
     </div>
 </body>

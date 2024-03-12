@@ -20,6 +20,7 @@ import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter
 import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period.component';
 import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
 import { HolidayInputComponent } from './Admin/holiday-input/holiday-input.component';
+import { NotificationComponent } from './studentHome/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { HolidayInputComponent } from './Admin/holiday-input/holiday-input.compo
     PermitLetterComponent,
     SchedulePeriodComponent,
     RemoveStudentComponent,
-    HolidayInputComponent
+    HolidayInputComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

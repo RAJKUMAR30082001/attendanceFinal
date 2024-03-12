@@ -50,6 +50,10 @@ export class SchedulePeriodComponent implements OnInit{
     this.adminService.getUrl().subscribe(data=>{
       
       data.subjectCode=Object.values(this.subjectCode.value)
+      data.hours = Object.fromEntries(
+        Object.values(this.subjectCode.value).map(e => [e, 0])
+      );
+     
       
       this.adminService.updateAdmin(data)
     })

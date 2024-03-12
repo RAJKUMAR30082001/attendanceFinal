@@ -16,6 +16,7 @@ import { UpdateAttendanceComponent } from './facultyHome/update-attendance/updat
 import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter.component';
 import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period.component';
 import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
+import { NotificationComponent } from './studentHome/notification/notification.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path:"permitLetter", component:PermitLetterComponent},
   {path:'schedule',component:SchedulePeriodComponent},
   {path:"deleteStudent",component:RemoveStudentComponent},
+  {path:"notification",component:NotificationComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }

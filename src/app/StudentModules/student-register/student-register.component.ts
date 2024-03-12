@@ -4,6 +4,7 @@ import { StudentData } from '../../student-data';
 import { StudentCouchService } from '../../student-couch.service';
 import { Router } from '@angular/router';
 import { FacultyService } from 'src/app/faculty.service';
+import { AdminService } from 'src/app/admin.service';
 
 @Component({
   selector: 'app-student-register',
@@ -17,15 +18,19 @@ export class StudentRegisterComponent implements OnInit {
   errorDivElement!:HTMLDivElement
   currentYear!:number
   RegisterNumber!:string
+  adminData!:[]
 
 
 
-  constructor(private fb: FormBuilder,private service:StudentCouchService,private red:Renderer2,private router:Router,private faculty:FacultyService) {}
+  constructor(private fb: FormBuilder,private service:StudentCouchService,private red:Renderer2,private router:Router,private faculty:FacultyService,private adminService:AdminService) {}
   
 
   ngOnInit() {
     this.errorDivElement=this.red.selectRootElement(".errorMessage")
     this.currentYear= new Date().getFullYear();
+    this.adminService.getUrl().subscribe(data=>{
+      this.adminData=data.subjectCode
+    })
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       middleName: ['', [Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -61,7 +66,9 @@ export class StudentRegisterComponent implements OnInit {
           email: this.registerForm.value.email,
           password: this.service.hashedPassword(this.registerForm.value.password),
           leaveLetter:[],
-          attendanceRecord:[]
+          notification:[],
+          numberOfClasses:this.getNumberOfClasses(),
+          attendanceRecord:this.AttendanceRecord()
         };
 
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);
@@ -71,5 +78,16 @@ export class StudentRegisterComponent implements OnInit {
         this.errorDivElement.innerHTML="Enter correct password"
       }
     }
+  }
+  getNumberOfClasses():any{
+    return Object.fromEntries(
+      this.adminData.map(e => [e, 0])
+    );
+    
+  }
+  AttendanceRecord():any{
+    return this.adminData.map(ele=>{
+      return {[ele]:0}
+    })
   }
 }

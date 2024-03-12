@@ -1,4 +1,5 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { CheckValidityService } from 'src/app/check-validity.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
 import { StudentData, facultyLogin } from 'src/app/student-data';
@@ -34,7 +35,6 @@ export class UpdateAttendanceComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked(): void {
     if (this.flashContainer && this.flashContainer.nativeElement) {
-      console.log('Flash Container:', this.flashContainer.nativeElement);
       this.flashContainer.nativeElement.style.display="block"
     }
   }
@@ -49,7 +49,7 @@ export class UpdateAttendanceComponent implements OnInit, AfterViewChecked {
     this.cdr.detectChanges();
   }
   
-  obtainPercentage(value: any, updateFlag?:boolean):any {
+  obtainPercentage(value: any, updateFlag?:boolean):Observable<any>| any {
     const attendanceRecord = value.attendanceRecord;
   
     const targetObject = attendanceRecord.find((record: { [key: string]: number }) =>
@@ -57,7 +57,8 @@ export class UpdateAttendanceComponent implements OnInit, AfterViewChecked {
   );
     if(targetObject && updateFlag){
       targetObject[this.subjectCode]=this.inputValue
-      return(value)
+      console.log(value)
+      return of(value)
     }
     else if (targetObject) {
       this.percentageValue = targetObject[this.subjectCode];
@@ -74,27 +75,31 @@ export class UpdateAttendanceComponent implements OnInit, AfterViewChecked {
   }
   getDetails(){
     this.errorMessage=''
-    this.stdService.getRequiredData().subscribe(data=>{
-      let key=Object.keys(data);
-      console.log(this.displayStudent)
+    this.stdService.getFullDocument().subscribe(data=>{
+      if(data['2024']){
+      let dataDetails=data['2024']
+      let key=Object.keys(dataDetails);
       this.displayStudent=key.map(i=>{
         if(this.flag && i===this.elementValue){
-          this.filteredValue=data[i]
-          this.obtainPercentage(data[i])
+          this.filteredValue=dataDetails[i]
+          this.obtainPercentage(dataDetails[i])
         }
         else if(this.showUpdateContainer && i===this.regNo){
-          console.log(data[i],"before")
-          data[i]=this.obtainPercentage(data[i],this.showUpdateContainer)
-          console.log(data[i])
-          
-          this.stdService.updateDocument(data)
+          this.obtainPercentage(dataDetails[i],this.showUpdateContainer).subscribe((updatedData: any)=>{
+            data['2024'][i]=updatedData
+            this.stdService.updateDocument(data)
+          })
+          return dataDetails[i]
         }
         else{
-        this.obtainPercentage(data[i])
-        return  data[i]
+        this.obtainPercentage(dataDetails[i])
+        return  dataDetails[i]
       }
       })
+    }
     })
+    console.log(this.displayStudent)
+  
   }
   
 confirmUpdate(){
@@ -106,15 +111,12 @@ confirmUpdate(){
     this.getDetails()
     this.errorMessage="updated successfully"
     
-    // this.showUpdateContainer=false
     
     
-  //   setTimeout(()=>{
-  //     this.flag=false
-  //     this.showTable=true
-  //     this.getDetails()
+    setTimeout(()=>{
+      location.reload()
     
-  // },2000)
+  },2000)
 
   }
 }
