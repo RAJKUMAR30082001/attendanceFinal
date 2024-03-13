@@ -147,6 +147,9 @@ export class StudentCouchService {
       })
     );
   }
+  getValueRegisterNumber(regNo:string):Observable<any>{
+    return this.http.get<CouchDBViewResponse>(this.getViewUrl(regNo), { headers: this.getHeader() })
+  }
 
   
 }

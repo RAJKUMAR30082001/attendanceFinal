@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/admin.service';
+import { FaceapiService } from 'src/app/faceapi.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
 import { loginDetails } from 'src/app/student-data';
 
@@ -15,16 +16,23 @@ export class StudentLoginComponent implements OnInit {
   errorMessage!:HTMLDivElement
   year:number=new Date().getFullYear()
   isLog!:boolean
-  constructor(private fb:FormBuilder,private render:Renderer2,private service:StudentCouchService,private route:Router,private admin:AdminService){}
+  video!:HTMLVideoElement
+  flag!:any
+  inputFlag:Boolean = false;
+  constructor(private fb:FormBuilder,private render:Renderer2,private service:StudentCouchService,private route:Router,private admin:AdminService,private faceApi:FaceapiService){}
 
   ngOnInit(): void {
+    this.video=this.render.selectRootElement('#video') as HTMLVideoElement
+   
     this.errorMessage=this.render.selectRootElement(".errorMessage")
     this.loginForm=this.fb.group({
       registerNumber:['',[Validators.required]],
       password:["",[Validators.required]]
     })
+    this.startVideo()
     
   }
+  
  
   async onSubmit(){
     const studentDetails:loginDetails={
@@ -36,7 +44,61 @@ export class StudentLoginComponent implements OnInit {
       this.admin.setValue(this.isLog)
       this.route.navigate(['/adminHome']);
     }
-    else
-    this.service.login(studentDetails,this.errorMessage)
+    else{
+    console.log(this.flag)
+    if(this.flag.length>0){
+      console.log("coming")
+      let finalResult=await this.faceApi.faceMatchDescriptor(this.loginForm.value.registerNumber,this.flag)
+      console.log(finalResult,this.loginForm.value.registerNumber)
+      if(finalResult.split(' ')[0]===this.loginForm.value.registerNumber){
+      this.service.login(studentDetails,this.errorMessage)
+    }
+    else{
+      this.errorMessage.innerHTML="face did not matched"
+    }
   }
-}
+  else{
+    console.log("odu motha")
+  }
+  }
+  }
+
+  async startVideo(): Promise<void> {
+    
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      
+      if (this.video) {
+        this.video.srcObject = stream;
+  
+        await new Promise<any>((resolve) => {
+          this.video.addEventListener('play', async () => {
+            this.errorMessage.innerHTML="wait until scan...."
+            try {
+              const results = await this.faceApi.confirmImage(
+                this.video,
+                this.loginForm.value.registerNumber,
+                this.errorMessage
+              );
+              this.errorMessage.innerHTML="face scanned successfully"
+              console.log(results)
+              this.flag=results
+              this.inputFlag=true
+        
+              resolve(results);
+            } catch (error) {
+              console.log(error);
+              resolve(false);
+            }
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error accessing webcam:', error);
+    }
+  }
+  
+    
+    
+  }
+

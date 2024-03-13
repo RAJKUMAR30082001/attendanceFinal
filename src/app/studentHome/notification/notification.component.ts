@@ -12,6 +12,7 @@ export class NotificationComponent implements OnInit {
   public userDetails!:StudentData
   public attendanceShortage!:[]
   public hours!:any
+  public j:number=10
   constructor(private check:CheckValidityService,private adminService:AdminService){}
 
   ngOnInit() {
@@ -35,6 +36,9 @@ export class NotificationComponent implements OnInit {
         }
       }
     });
+  }
+  jvalue(){
+    console.log(this.j)
   }
   
 }

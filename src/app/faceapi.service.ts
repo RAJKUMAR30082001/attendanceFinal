@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { StudentCouchService } from './student-couch.service';
 declare const faceapi: any;
 
 @Injectable({
@@ -16,11 +17,8 @@ export class FaceapiService {
   public timeInterval: any;
  
 
-  constructor() { }
-
-  async FaceDetection(video: HTMLVideoElement, registerNumber: string,divElement:HTMLDivElement): Promise<any> {
-    divElement.innerHTML="Don't move util face have been scanned"
-
+  constructor(private couch:StudentCouchService) { }
+  async loadModels(): Promise<void> {
     try {
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri('./assets/models'),
@@ -28,6 +26,17 @@ export class FaceapiService {
         faceapi.nets.faceRecognitionNet.loadFromUri('./assets/models'),
         faceapi.nets.ssdMobilenetv1.loadFromUri('./assets/models')
       ]);
+      console.log("Models loaded successfully");
+    } catch (error) {
+      console.error("Error loading models:", error);
+    }
+  }
+
+  async FaceDetection(video: HTMLVideoElement, registerNumber: string,divElement:HTMLDivElement): Promise<any> {
+    divElement.innerHTML="Don't move util face have been scanned"
+
+    try {
+      await this.loadModels()
       console.log("loaded");
     } catch (error) {
       console.log("error of the model", error);
@@ -70,11 +79,65 @@ export class FaceapiService {
       this.timeInterval = setInterval(async () => {
         const labeledDescriptors = await this.FaceDetection(video, registerNumber,divTag);
         resolve(labeledDescriptors);
-      }, 1000); // Adjust the interval duration as needed
+      }, 1000);
     });
   }
 
   clearIntervalTimer() {
     clearInterval(this.timeInterval);
   }
+
+  async confirmImage(video: HTMLVideoElement, registerNumber: string, divTag: HTMLDivElement): Promise<any> {
+    try {
+      await this.loadModels();
+  
+      return new Promise((resolve) => {
+        let clearId: any;
+  
+        clearId = setInterval(async () => {
+          let resultsDes = await this.detectFace(video, divTag);
+          if (resultsDes.length > 0) {
+            console.log(resultsDes);
+            this.clearIntervalId(clearId);
+            resolve(resultsDes);
+          }
+        }, 1000);
+      });
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  
+  async detectFace(video: HTMLVideoElement, divTag: HTMLDivElement): Promise<any> {
+    divTag.innerHTML = "Don't move face until face scanned";
+    let resultsVal = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
+    return resultsVal.map((res: any) => res.descriptor);
+    
+  }
+  
+  clearIntervalId(id: any) {
+    clearInterval(id);
+  }
+  faceMatchDescriptor(regNo: string, descriptor: any): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.couch.getValueRegisterNumber(regNo).subscribe(data => {
+        if (data) {
+          let descriptorStored = data.rows[0].value.LabeledDescritor;
+          let floatArray = new Float32Array(descriptorStored[0].descriptors[0]);
+          console.log(floatArray);
+          const labeledDes = new faceapi.LabeledFaceDescriptors(descriptorStored[0].label, [floatArray]);
+          console.log(labeledDes);
+          const faceMatcher = new faceapi.FaceMatcher([labeledDes]);
+          console.log(descriptor);
+          let result = faceMatcher.findBestMatch(descriptor[0]);
+          resolve(result.toString());
+        }
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+  
+  
 }

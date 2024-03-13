@@ -7,6 +7,7 @@
           <div class="card-header">
             Login
           </div>
+          <video src="" id="video" height="300" width="300" autoplay></video>
           <div class="errorMessage"></div>
           <div class="card-body">
             <form  (ngSubmit)="onSubmit()" [formGroup]="loginForm" >
@@ -37,7 +38,7 @@
                 <a routerLink="/forgot-password">Forgot Password?</a>
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary btn-custom" >Login</button>
+                <button type="submit" class="btn btn-primary btn-custom" [disabled]="!inputFlag">Login</button>
               </div>
             </form>
             
