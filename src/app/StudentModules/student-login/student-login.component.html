@@ -7,8 +7,9 @@
           <div class="card-header">
             Login
           </div>
-          <video src="" id="video" height="300" width="300" autoplay></video>
-          <div class="errorMessage"></div>
+          
+          <video src="" id="video" [ngStyle]="{'border-color': styleFlag ? 'green' : 'red'}" autoplay></video>
+          <div class="errorMessage" [ngStyle]="{'color': styleFlag ? 'green' : 'red'}"></div>
           <div class="card-body">
             <form  (ngSubmit)="onSubmit()" [formGroup]="loginForm" >
               <div class="mb-3">

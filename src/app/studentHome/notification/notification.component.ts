@@ -12,16 +12,19 @@ export class NotificationComponent implements OnInit {
   public userDetails!:StudentData
   public attendanceShortage!:[]
   public hours!:any
-  public j:number=10
+  public j:number=1
+  public container!:HTMLDivElement
   constructor(private check:CheckValidityService,private adminService:AdminService){}
 
   ngOnInit() {
+    this.container=document.getElementById("notification") as HTMLDivElement
     this.userDetails=this.check.getData()
+    this.leavePermit()
     this.adminService.getUrl().subscribe(data=>{
       this.hours=data.hours
       this.notify(this.userDetails)
     })
-    console.log(this.hours)
+   
     
   }
   notify(details: StudentData) {
@@ -30,15 +33,48 @@ export class NotificationComponent implements OnInit {
       let classesAttended = details.numberOfClasses[key];
       
       if (element[key] < 70 && this.hours[key] !== 0) {
-        for (let j = 1; (classesAttended / (this.hours[key]+ 1)) * 100 < 75; j++) {
+        for (this.j = 1; (classesAttended / (this.hours[key]+ 1)) * 100 < 75; this.j++) {
           classesAttended++;
-          console.log(`Required period to attend for ${key}: ${j}`);
+          
         }
+        const para= document.createElement('p') as HTMLParagraphElement
+        para.innerHTML=`<strong>Required period to attend for ${key}: ${this.j-1} </strong>`
+        this.container?.appendChild(para)
+        
       }
     });
   }
-  jvalue(){
-    console.log(this.j)
+
+  leavePermit(){
+    let request=this.userDetails.leaveLetter
+    request.forEach(item=>{
+      if(item.bool){
+        this.addString(`Leave granted for ${item.subjectCode} on ${item.leaveDate}`)
+      }
+      else{
+        if(this.passedDate(item.leaveDate)){
+          this.addString(`Leave on ${item.leaveDate} is waiting`)
+        }
+        else{
+          this.addString(`Leave on ${item.leaveDate} is denied`)
+        }
+      }
+    })
+  }
+  passedDate(date:Date):boolean{
+    const year=new Date().getTime()
+    const currentDate=new Date().getTime()
+    if(year>currentDate){
+      return false
+    }
+    else{
+      return true
+    }
+  }
+  addString(str:string){
+    const para= document.createElement('p') as HTMLParagraphElement
+        para.innerHTML=`<strong>${str}</strong>`
+        this.container?.appendChild(para)
   }
   
 }

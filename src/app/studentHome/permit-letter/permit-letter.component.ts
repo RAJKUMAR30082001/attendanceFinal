@@ -29,7 +29,7 @@ export class PermitLetterComponent implements OnInit {
     name:['',[Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)]],
     registerNumber:['',[Validators.required,this.checkRegisterNumber.bind(this)]],
     department:['',[Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/),this.checkDepartment.bind(this)]],
-    subjectCode:['',[Validators.required]],
+    subjectCode:['',[Validators.required,this.checkSubjectCode.bind(this)]] ,
     leaveDate:['',[Validators.required,this.checkDataValid.bind(this)]],
     reason:['',[Validators.required]]
   })
@@ -39,7 +39,7 @@ export class PermitLetterComponent implements OnInit {
     name:this.leaveForm.value.name?this.leaveForm.value.name.toLowerCase():"",
     registerNumber:this.leaveForm.value.registerNumber,
     department:this.leaveForm.value.department?this.leaveForm.value.department.toLowerCase():"",
-    subjectCode:this.leaveForm.value.subjectCode,
+    subjectCode:this.leaveForm.value.subjectCode?this.leaveForm.value.subjectCode.toLowerCase():"",
     leaveDate:this.leaveForm.value.leaveDate,
     reason:this.leaveForm.value.reason,
     bool:false
@@ -90,6 +90,16 @@ checkRegisterNumber(control: AbstractControl) : ValidationErrors | null{
     return {registerNumberError:true}
   }
 }
+checkSubjectCode(control:AbstractControl) :ValidationErrors| null{
+  let subjectCodeList=Object.keys(this.getData("numberOfClasses"))
+  let code=control.value?control.value.toLowerCase():''
+  if(subjectCodeList.includes(code)){
+    return null
+  }
+  else{
+    return{subjectNotAvailable: true}
+  }
+}
 getData(value:string):any{
   let data=this.check.getData()
   return data[value]
@@ -115,4 +125,5 @@ facultyData(data: leaveLetterForm) {
     }
   });
 }
+
 }

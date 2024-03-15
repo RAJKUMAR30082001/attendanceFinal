@@ -19,6 +19,7 @@ export class StudentLoginComponent implements OnInit {
   video!:HTMLVideoElement
   flag!:any
   inputFlag:Boolean = false;
+  styleFlag:boolean=false
   constructor(private fb:FormBuilder,private render:Renderer2,private service:StudentCouchService,private route:Router,private admin:AdminService,private faceApi:FaceapiService){}
 
   ngOnInit(): void {
@@ -39,7 +40,7 @@ export class StudentLoginComponent implements OnInit {
       registerNumber:this.loginForm.value.registerNumber,
       password:this.loginForm.value.password
     }
-    this.isLog=await(this.admin.checkAdmin(studentDetails.password,studentDetails.registerNumber))
+    this.isLog=await(this.admin.checkAdmin(studentDetails.password,studentDetails.registerNumber,this.flag))
     if(this.isLog){
       this.admin.setValue(this.isLog)
       this.route.navigate(['/adminHome']);
@@ -54,7 +55,8 @@ export class StudentLoginComponent implements OnInit {
       this.service.login(studentDetails,this.errorMessage)
     }
     else{
-      this.errorMessage.innerHTML="face did not matched"
+      this.styleFlag=false
+      this.errorMessage.innerHTML="Face or register number did not matched"
     }
   }
   else{
@@ -80,11 +82,12 @@ export class StudentLoginComponent implements OnInit {
                 this.loginForm.value.registerNumber,
                 this.errorMessage
               );
+              this.styleFlag=true
               this.errorMessage.innerHTML="face scanned successfully"
               console.log(results)
               this.flag=results
               this.inputFlag=true
-        
+                
               resolve(results);
             } catch (error) {
               console.log(error);

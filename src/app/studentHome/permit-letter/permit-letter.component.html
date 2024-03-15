@@ -7,19 +7,23 @@
   <!-- Bootstrap CSS (Already Installed) -->
   <style>
     body {
-      background-color: #f8f9fa;
-      width: 700px;
-      padding-left: 50px;
+      background-color:rgb(207, 78, 78);
+      width: 600px;
+      
+      
     }
 
     .leave-form {
       max-width: 600px;
-      margin: 50px auto;
-      padding: 20px;
+      
+      max-height: 100vh; 
+      overflow-y: auto;
+      
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
   </style>
 </head>
 <body>
@@ -74,6 +78,10 @@
         <div class="error-message" *ngIf="leaveForm.get('subjectCode')!.hasError('required') && leaveForm.get('subjectCode')!.touched">
           SubjectCode is required.
         </div>
+        <div class="error-message" *ngIf="leaveForm.get('subjectCode')!.hasError('subjectNotAvailable') && leaveForm.get('subjectCode')!.touched">
+          Enter Your Department Subject Code.
+        </div>
+
       </div>
 
       <!-- Leave Date -->
@@ -96,7 +104,9 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="text-center">
+      <button type="submit" class="btn btn-primary"  [disabled]="leaveForm.invalid">Submit</button>
+    </div>
     </form>
   </div>
 </div>

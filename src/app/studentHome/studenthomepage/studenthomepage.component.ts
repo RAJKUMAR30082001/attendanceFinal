@@ -44,6 +44,7 @@ constructor(private service:CheckValidityService){}
       this.notificationFlag=true
       this.attendanceFlag=false
       this.leaveLetterFlag=false
+      this.redMark=false
     }
     leaveLetter(event:Event){
       event.preventDefault()

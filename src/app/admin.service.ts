@@ -4,6 +4,7 @@ import { StudentCouchService } from './student-couch.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import { Observable } from 'rxjs';
 import { CheckValidityService } from './check-validity.service';
+import { FaceapiService } from './faceapi.service';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { CheckValidityService } from './check-validity.service';
 })
 export class AdminService implements CanActivate{
   private bool!:boolean
-  constructor(private http:HttpClient,private stdService:StudentCouchService,private navigater:Router,private check:CheckValidityService) { }
+  constructor(private http:HttpClient,private stdService:StudentCouchService,private navigater:Router,private check:CheckValidityService,private face:FaceapiService) { }
   private baseUrl=`${this.stdService.apiUrl}/Admin`
   private Auth=this.stdService.getHeader()
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
@@ -29,15 +30,19 @@ export class AdminService implements CanActivate{
     return false
    }
   }
-  checkAdmin(userName: string, Password: string): Promise<boolean> {
+  checkAdmin(userName: string, Password: string,descriptor:any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.getUrl().subscribe(
-        (data) => {
-        
+       async (data) => {
+        console.log(data.LabeledDescritor,data.hours)
+          let result=await this.face.adminFaceMatch(data.LabeledDescritor,descriptor)
+          if(result.split(" ")[0]==='admin'){
           if (data['username'] === userName && data['password'] === Password) {
             this.check.SetData(data,true)
             resolve(true);
           } else {
+            resolve(false);
+          }}else{
             resolve(false);
           }
         },

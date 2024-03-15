@@ -121,16 +121,10 @@ export class FaceapiService {
   }
   faceMatchDescriptor(regNo: string, descriptor: any): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.couch.getValueRegisterNumber(regNo).subscribe(data => {
+      this.couch.getValueRegisterNumber(regNo).subscribe(async data => {
         if (data) {
           let descriptorStored = data.rows[0].value.LabeledDescritor;
-          let floatArray = new Float32Array(descriptorStored[0].descriptors[0]);
-          console.log(floatArray);
-          const labeledDes = new faceapi.LabeledFaceDescriptors(descriptorStored[0].label, [floatArray]);
-          console.log(labeledDes);
-          const faceMatcher = new faceapi.FaceMatcher([labeledDes]);
-          console.log(descriptor);
-          let result = faceMatcher.findBestMatch(descriptor[0]);
+          let result=await this.faceMatch(descriptorStored,descriptor)
           resolve(result.toString());
         }
       }, error => {
@@ -138,6 +132,25 @@ export class FaceapiService {
       });
     });
   }
-  
+  adminFaceMatch(descriptorStored:any, descriptors:any):Promise<string>{
+    return new Promise<string>(async(resolve,reject)=>{
+        let result=await this.faceMatch(descriptorStored,descriptors)
+        console.log(result)
+          resolve(result.toString());
+    })
+  }
+  faceMatch(descriptorStored:any,descriptor:any){
+    return new Promise<string>((resolve,reject)=>{
+      console.log(descriptorStored)
+      let floatArray = new Float32Array(descriptorStored[0].descriptors[0]);
+          console.log(floatArray);
+          const labeledDes = new faceapi.LabeledFaceDescriptors(descriptorStored[0].label, [floatArray]);
+          console.log(labeledDes);
+          const faceMatcher = new faceapi.FaceMatcher([labeledDes]);
+          console.log(descriptor);
+          let result = faceMatcher.findBestMatch(descriptor[0]);
+          resolve(result.toString());
+    })
+  }
   
 }

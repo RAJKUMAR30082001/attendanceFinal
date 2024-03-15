@@ -74,15 +74,18 @@
     margin-left: 5px; /* Adjust as needed */
     
 }
+.letter{
+    padding-left: 100px;
+}
     </style>
 </head>
 <body>
     <div id="container">
         <div id="side-container">
             <div id="profile" >
-                <p>Name: {{userDetails['firstName']}}</p>
+                <p>Name: {{userDetails['firstName']| uppercase}}</p>
                 <p>Registration Number: {{userDetails['registerNumber']}}</p>
-                <p>Department: {{userDetails['department']}}</p>
+                <p>Department: {{userDetails['department']| uppercase}}</p>
             </div>
             <div id="sidebar-buttons">
                 <a href="#" class="sidebar-button" (click)="attendance($event)">Attendance</a>
@@ -94,7 +97,7 @@
             </div>
         </div>
         
-        <div *ngIf="leaveLetterFlag">
+        <div *ngIf="leaveLetterFlag" class="letter">
             <app-permit-letter></app-permit-letter>
         </div>
         <div *ngIf="attendanceFlag"></div>
