@@ -12,23 +12,26 @@ import { leaveLetterForm } from 'src/app/student-data';
 })
 export class PermitLetterComponent implements OnInit {
  constructor(private check:CheckValidityService,private fb:FormBuilder,private stdService:StudentCouchService,private facultyService:FacultyService){}
- details!:leaveLetterForm
+ details!:any
  leaveForm!:FormGroup
  year=new Date().getFullYear()
  storedDept:any
+ names!:string
+ registerNumbers!:string
+ departments!:string
  ngOnInit():void {
   this.facultyService.facultyForLetter().subscribe(data=>
     console.log(data))
   this.formValidation()
+  this.names=this.check.getData().firstName.toUpperCase()
+ this.registerNumbers=this.check.getData().registerNumber
+ this.departments=this.check.getData().department
 }
  formValidation(){
 
  
 
   this.leaveForm=this.fb.group({
-    name:['',[Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)]],
-    registerNumber:['',[Validators.required,this.checkRegisterNumber.bind(this)]],
-    department:['',[Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/),this.checkDepartment.bind(this)]],
     subjectCode:['',[Validators.required,this.checkSubjectCode.bind(this)]] ,
     leaveDate:['',[Validators.required,this.checkDataValid.bind(this)]],
     reason:['',[Validators.required]]
@@ -36,14 +39,16 @@ export class PermitLetterComponent implements OnInit {
  }
  onSubmit(){
   this.details={
-    name:this.leaveForm.value.name?this.leaveForm.value.name.toLowerCase():"",
-    registerNumber:this.leaveForm.value.registerNumber,
-    department:this.leaveForm.value.department?this.leaveForm.value.department.toLowerCase():"",
+    name:this.names.toLowerCase(),
+    registerNumber:this.registerNumbers,
+    department:this.departments.toLowerCase(),
     subjectCode:this.leaveForm.value.subjectCode?this.leaveForm.value.subjectCode.toLowerCase():"",
     leaveDate:this.leaveForm.value.leaveDate,
     reason:this.leaveForm.value.reason,
     bool:false
   }
+  console.log(this.details)
+  
   this.facultyData(this.details)
   this.storedDept=this.check.getData()
   this.stdService.getFullDocument().subscribe(data=>{
@@ -65,31 +70,31 @@ export class PermitLetterComponent implements OnInit {
   const enteredDate=new Date(control.value).getTime()
   const  CurrentDate= new Date().getTime()
 
-  if(enteredDate> CurrentDate){
+  if(enteredDate>=CurrentDate){
     return null
   }
   else{
     return {invalidDate:true}
   }
 }
-checkDepartment(control:AbstractControl):ValidationErrors |null{
-  const dept=control.value
-  if(dept.toLowerCase()===this.getData('department')){
-    return null
-  }
-  else{
-    return {departmentError:true}
-  }
-}
-checkRegisterNumber(control: AbstractControl) : ValidationErrors | null{
-  const  regNo = control.value?control.value.toLowerCase():"";
-  if(regNo===this.getData('registerNumber')){
-    return null
-  }
-  else{
-    return {registerNumberError:true}
-  }
-}
+// checkDepartment(control:AbstractControl):ValidationErrors |null{
+//   const dept=control.value
+//   if(dept.toLowerCase()===this.getData('department')){
+//     return null
+//   }
+//   else{
+//     return {departmentError:true}
+//   }
+// }
+// checkRegisterNumber(control: AbstractControl) : ValidationErrors | null{
+//   const  regNo = control.value?control.value.toLowerCase():"";
+//   if(regNo===this.getData('registerNumber')){
+//     return null
+//   }
+//   else{
+//     return {registerNumberError:true}
+//   }
+// }
 checkSubjectCode(control:AbstractControl) :ValidationErrors| null{
   let subjectCodeList=Object.keys(this.getData("numberOfClasses"))
   let code=control.value?control.value.toLowerCase():''
@@ -108,8 +113,8 @@ getData(value:string):any{
 facultyData(data: leaveLetterForm) {
   let subCode = data.subjectCode;
   this.facultyService.getFullDocument().subscribe(res => {
-    if (res[data.department]) {
-      let facultyDetail = res[data.department];
+    if (res[this.departments]) {
+      let facultyDetail = res[this.departments];
       let key = Object.keys(facultyDetail).find(key => {
         if (facultyDetail[key].subjectCode === subCode) {
           let array = facultyDetail[key].leavePermission;

@@ -1,1 +1,11 @@
-<div id="notification"></div>
+<div class="container">
+    <h1>Notification</h1>
+    <div class="row">
+      <div class="col">
+        <p *ngFor="let i of notificationContainer; let odd = odd" [ngClass]="{'text-red bg-black': odd, 'bg-white': !odd}">
+          {{ i }}
+        </p>
+      </div>
+    </div>
+  </div>
+  

@@ -36,39 +36,21 @@
       <!-- Name (Auto-filled) -->
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter your name" formControlName="name">
-        <div class="error-message" *ngIf="leaveForm.get('name')!.hasError('required') && leaveForm.get('name')!.touched">
-          Name is required.
-        </div>
-        <div class="error-message" *ngIf="leaveForm.get('name')!.hasError('pattern') && leaveForm.get('name')!.touched">
-          Name must have alphabet only.
-        </div>
+        <input type="text" class="form-control" id="name" [value]='names' readonly>
+       
       </div>
       <div class="mb-3">
         <label for="registerNumber" class="form-label">RegisterNumber</label>
-        <input type="text" class="form-control" id="registerNumber" placeholder="Enter your register number" formControlName="registerNumber">
-        <div class="error-message" *ngIf="leaveForm.get('registerNumber')!.hasError('required') && leaveForm.get('registerNumber')!.touched">
-          RegisterNumber is required.
-        </div>
-        <div class="error-message" *ngIf="leaveForm.get('registerNumber')!.hasError('registerNumberError') && leaveForm.get('registerNumber')!.touched">
-          Enter valid RegisterNumber.
-        </div>
+        <input type="text" class="form-control" id="registerNumber" [value]='registerNumbers' readonly>
+        
 
       </div>
 
       <!-- Department -->
       <div class="mb-3">
         <label for="department" class="form-label">Department</label>
-        <input type="text" class="form-control" id="department" placeholder="Enter your department" formControlName="department">
-        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('required') && leaveForm.get('department')!.touched">
-          Department is required.
-        </div>
-        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('pattern') && leaveForm.get('department')!.touched">
-          Department must have alphabet only.
-        </div>
-        <div class="error-message" *ngIf="leaveForm.get('department')!.hasError('departmentError') && leaveForm.get('department')!.touched">
-          Enter your department name
-        </div>
+        <input type="text" class="form-control" id="department"  [value]="departments"  readonly>
+        
       </div>
 
       <!-- Subject Code -->

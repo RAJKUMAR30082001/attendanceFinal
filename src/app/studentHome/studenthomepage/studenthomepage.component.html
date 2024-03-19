@@ -74,9 +74,10 @@
     margin-left: 5px; /* Adjust as needed */
     
 }
-.letter{
+.letter,.attendance{
     padding-left: 100px;
 }
+
     </style>
 </head>
 <body>
@@ -100,8 +101,8 @@
         <div *ngIf="leaveLetterFlag" class="letter">
             <app-permit-letter></app-permit-letter>
         </div>
-        <div *ngIf="attendanceFlag"></div>
-        <div *ngIf="notificationFlag">
+        <div *ngIf="attendanceFlag" class="attendance"><app-attendance-view></app-attendance-view></div>
+        <div *ngIf="notificationFlag" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <app-notification></app-notification>
         </div>
     </div>

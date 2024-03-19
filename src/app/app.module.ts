@@ -21,6 +21,7 @@ import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period
 import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
 import { HolidayInputComponent } from './Admin/holiday-input/holiday-input.component';
 import { NotificationComponent } from './studentHome/notification/notification.component';
+import { AttendanceViewComponent } from './studentHome/attendance-view/attendance-view.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NotificationComponent } from './studentHome/notification/notification.c
     SchedulePeriodComponent,
     RemoveStudentComponent,
     HolidayInputComponent,
-    NotificationComponent
+    NotificationComponent,
+    AttendanceViewComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ export class NotificationComponent implements OnInit {
   public hours!:any
   public j:number=1
   public container!:HTMLDivElement
+  public notificationContainer:string[]=[]
   constructor(private check:CheckValidityService,private adminService:AdminService){}
 
   ngOnInit() {
@@ -37,9 +38,7 @@ export class NotificationComponent implements OnInit {
           classesAttended++;
           
         }
-        const para= document.createElement('p') as HTMLParagraphElement
-        para.innerHTML=`<strong>Required period to attend for ${key}: ${this.j-1} </strong>`
-        this.container?.appendChild(para)
+        this.addString(`Required period to attend for ${key}: ${this.j-1}`)
         
       }
     });
@@ -72,9 +71,9 @@ export class NotificationComponent implements OnInit {
     }
   }
   addString(str:string){
-    const para= document.createElement('p') as HTMLParagraphElement
-        para.innerHTML=`<strong>${str}</strong>`
-        this.container?.appendChild(para)
+    console.log(str)
+    this.notificationContainer.push(str)
+    console.log(this.notificationContainer)
   }
   
 }

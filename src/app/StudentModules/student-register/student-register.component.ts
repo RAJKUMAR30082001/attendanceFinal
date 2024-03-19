@@ -40,7 +40,8 @@ export class StudentRegisterComponent implements OnInit {
       registerNumber: ['', [Validators.required, Validators.minLength(10)]],
       password: [
         '',
-        [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z]).+$/)]
+        [Validators.required, Validators.minLength(8), Validators.pattern(/^917722[Yy]\d+$/
+          )]
       ],
       confirmPassword: [
         '',

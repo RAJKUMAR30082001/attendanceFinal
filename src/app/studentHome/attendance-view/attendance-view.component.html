@@ -1,0 +1,16 @@
+
+<div class="container"  >
+ 
+  <h1 class="text-center mb-4 text-uppercase"><strong>Attendance</strong></h1> 
+  <div *ngIf="flag">
+  <div class="border border-dotted p-3" >
+    <canvas id="myChart" width="500" height="350"></canvas>
+  </div>
+  <button class="btn btn-primary" style="margin-top: 10px;" (click)="overAll()">View overall Attendance</button>
+</div>
+<div *ngIf="!flag">
+  <div class="border border-dotted p-3" >
+    <canvas id="pieChart" width="400" height="200"></canvas>
+  </div>
+  <button class="btn btn-primary" style="margin-top: 10px;" (click)="back()">back</button></div>
+</div>

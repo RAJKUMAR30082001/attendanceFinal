@@ -55,7 +55,7 @@
                 Register Number must be at least 10 characters long.
               </div>
               <div class="error-message" *ngIf="registerForm.get('registerNumber')!.hasError('pattern') && registerForm.get('registerNumber')!.touched">
-                Register Number do not contain any symbol.
+                Register Number do not satisfies the pattern.
               </div>
             </div>
   

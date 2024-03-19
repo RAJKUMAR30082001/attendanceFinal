@@ -36,9 +36,7 @@ export interface facultyLogin{
 }
 
 export interface leaveLetterForm{
-    name:string
-    registerNumber:string
-    department:string
+    
     subjectCode:string
     leaveDate:Date
     reason:string

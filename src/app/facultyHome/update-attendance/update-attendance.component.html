@@ -8,6 +8,8 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
+      max-height: 100vh; 
+      overflow-y: auto;
     }
 
     h2 {
@@ -38,6 +40,7 @@
 
     table {
       width: 100%;
+      
       border-collapse: collapse;
       margin-top: 20px;
     }
@@ -64,6 +67,7 @@
     }
 
     .button {
+    
       padding: 10px;
       background-color: #4caf50;
       color: white;
@@ -98,10 +102,13 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    #delete{
+      margin-left: 50px;
+    }
   </style>
 </head>
 <body>
-
+<div class="update">
   <h2>Update Attendance</h2>
 
   <label for="filterInput">Filter by Register Number:</label>
@@ -153,8 +160,9 @@
     <input type="text" name="newAttendance" id="newAttendance"  placeholder="Enter Attendance"/><br/>
     <div>{{errorMessage}}</div>
     <button class="button" (click)="confirmUpdate()">Update</button>
+    <button class="button" id="delete" (click)="back()">Back</button>
   </div>
 
-
+</div>
 </body>
 </html>

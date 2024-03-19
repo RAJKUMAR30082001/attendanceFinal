@@ -40,11 +40,12 @@ export class StudentLoginComponent implements OnInit {
       registerNumber:this.loginForm.value.registerNumber,
       password:this.loginForm.value.password
     }
+    if(studentDetails.registerNumber.length<6){
     this.isLog=await(this.admin.checkAdmin(studentDetails.password,studentDetails.registerNumber,this.flag))
     if(this.isLog){
       this.admin.setValue(this.isLog)
       this.route.navigate(['/adminHome']);
-    }
+    }}
     else{
     console.log(this.flag)
     if(this.flag.length>0){

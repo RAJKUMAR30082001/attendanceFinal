@@ -52,6 +52,7 @@ export class FacultyService {
           let keys = Object.keys(stdData).filter(key => stdData[key].email === email);
           if (keys.length > 0) {
             errorMessage.innerHTML = "Email already exists in student data";
+            return
           }
         });
 
@@ -77,6 +78,7 @@ export class FacultyService {
         // Add faculty data to existing department
         details[email] = data;
         this.updateDocument(res);
+        this.route.navigate(['/home'])
       } else {
         // Create new department data
         res[department] = {

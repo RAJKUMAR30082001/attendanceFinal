@@ -49,7 +49,7 @@ export class FacultyRegisterComponent implements OnInit {
       this.facultyService.putData(this.facultyDetails,this.errorMessage)
       console.log("success")
       this.facultyForm.reset()
-      this.route.navigate(['/home'])
+      // this.route.navigate(['/home'])
 
       
     }

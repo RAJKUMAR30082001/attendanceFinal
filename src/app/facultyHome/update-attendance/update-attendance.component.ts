@@ -127,5 +127,9 @@ checkNumber(value:any,percentage:number):boolean{
   }
   return true
 }
+back(){
+  this.showUpdateContainer=false
+  this.showTable=true
+}
   
 }

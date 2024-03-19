@@ -17,6 +17,7 @@ import { PermitLetterComponent } from './studentHome/permit-letter/permit-letter
 import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period.component';
 import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
 import { NotificationComponent } from './studentHome/notification/notification.component';
+import { AttendanceViewComponent } from './studentHome/attendance-view/attendance-view.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path:'schedule',component:SchedulePeriodComponent},
   {path:"deleteStudent",component:RemoveStudentComponent},
   {path:"notification",component:NotificationComponent},
+  {path:"attendance",component:AttendanceViewComponent},
 
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }
