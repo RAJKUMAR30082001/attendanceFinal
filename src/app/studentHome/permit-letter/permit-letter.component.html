@@ -84,6 +84,10 @@
         <textarea class="form-control" id="reason" rows="4" placeholder="Enter your leave reason" formControlName="reason"></textarea>
         <div class="error-message" *ngIf="leaveForm.get('reason')!.hasError('required') && leaveForm.get('reason')!.touched"></div>
       </div>
+      <div class="mb-3">
+        <label for="file">Upload File</label>
+        <input type="file" id="file" (change)="onFileSelected($event)" accept=".jpg,.jpeg,.png,.pdf">
+      </div>
 
       <!-- Submit Button -->
       <div class="text-center">

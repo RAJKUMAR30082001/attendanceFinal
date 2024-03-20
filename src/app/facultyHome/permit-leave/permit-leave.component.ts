@@ -12,6 +12,8 @@ export class PermitLeaveComponent implements OnInit {
   details:any
   requestLetters:any
   year:number=new Date().getFullYear()
+  flag:boolean=false
+  file:any
 constructor (private check:CheckValidityService,private stdService:StudentCouchService,private faculty:FacultyService){}
 ngOnInit(): void {
   this.details=this.check.getData()
@@ -20,22 +22,28 @@ ngOnInit(): void {
 }
 approvePermission(registerNumber:string,fullData:any){
  console.log(this.details)
-  this.stdService.getFullDocument().subscribe(data=>{
-    if(data[this.year]){
+this.flag=true
+const attachmentData=this.details.leavePermission[1].uploadFile._attachments.filename.data
+const contentType=this.details.leavePermission[1].uploadFile._attachments.filename.content_type
+this.file = 'data:' + contentType + ';base64,' + attachmentData;
+
+
+  // this.stdService.getFullDocument().subscribe(data=>{
+  //   if(data[this.year]){
       
-      let detail=data[this.year]
-      if(detail[registerNumber]){
-        let leaveArray=detail[registerNumber].leaveLetter
-        console.log(leaveArray)
-        leaveArray[0]['bool']=true
-        this.stdService.updateDocument(data)
-        this.removeDataFromFacultyDetails(fullData)
+  //     let detail=data[this.year]
+  //     if(detail[registerNumber]){
+  //       let leaveArray=detail[registerNumber].leaveLetter
+  //       console.log(leaveArray)
+  //       leaveArray[0]['bool']=true
+  //       this.stdService.updateDocument(data)
+  //       this.removeDataFromFacultyDetails(fullData)
         
         
-      }
-    }
-  })
-  this.removeFromArray(fullData)
+  //     }
+  //   }
+  // })
+  // this.removeFromArray(fullData)
 }
 rejectPermission(fullData:any){
   this.removeDataFromFacultyDetails(fullData)

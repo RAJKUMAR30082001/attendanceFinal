@@ -19,6 +19,8 @@ export class PermitLetterComponent implements OnInit {
  names!:string
  registerNumbers!:string
  departments!:string
+ public uploadFile!:File
+ couchFile!:any
  ngOnInit():void {
   this.facultyService.facultyForLetter().subscribe(data=>
     console.log(data))
@@ -45,6 +47,7 @@ export class PermitLetterComponent implements OnInit {
     subjectCode:this.leaveForm.value.subjectCode?this.leaveForm.value.subjectCode.toLowerCase():"",
     leaveDate:this.leaveForm.value.leaveDate,
     reason:this.leaveForm.value.reason,
+    uploadFile:this.couchFile,
     bool:false
   }
   console.log(this.details)
@@ -130,5 +133,24 @@ facultyData(data: leaveLetterForm) {
     }
   });
 }
+onFileSelected(event: any): void {
+  this.uploadFile = event.target.files[0];
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    const fileContent = reader.result!.toString().split(',')[1]; 
+    this.couchFile= {
+      _attachments: {
+        filename: {
+          content_type: this.uploadFile.type,
+          data: fileContent
+        }
+      }
+    };
+    
+  };
+  reader.readAsDataURL(this.uploadFile);
+}
+
 
 }

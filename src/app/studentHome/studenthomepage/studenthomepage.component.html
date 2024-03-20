@@ -89,8 +89,9 @@
                 <p>Department: {{userDetails['department']| uppercase}}</p>
             </div>
             <div id="sidebar-buttons">
-                <a href="#" class="sidebar-button" (click)="attendance($event)">Attendance</a>
+               
                 <a href="#" class="sidebar-button" (click)="leaveLetter($event)">Leave Letter</a>
+                <a href="#" class="sidebar-button" (click)="attendance($event)">Attendance</a>
                 <a href="" class="sidebar-button" (click)="notification($event)">Notification
                     <span class="notification-mark"  *ngIf="redMark"></span>
                 </a>

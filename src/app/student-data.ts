@@ -41,6 +41,7 @@ export interface leaveLetterForm{
     leaveDate:Date
     reason:string
     bool:boolean
+    uploadFile:File
 }
 
 
