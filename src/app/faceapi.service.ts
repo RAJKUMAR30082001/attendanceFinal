@@ -149,6 +149,7 @@ export class FaceapiService {
           const faceMatcher = new faceapi.FaceMatcher([labeledDes]);
           console.log(descriptor);
           let result = faceMatcher.findBestMatch(descriptor[0]);
+          console.log(result,"final result")
           resolve(result.toString());
     })
   }

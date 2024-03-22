@@ -3,6 +3,7 @@ import { CheckValidityService } from 'src/app/check-validity.service';
 import { FacultyService } from 'src/app/faculty.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
 
+
 @Component({
   selector: 'app-permit-leave',
   templateUrl: './permit-leave.component.html',
@@ -22,32 +23,31 @@ ngOnInit(): void {
 }
 approvePermission(registerNumber:string,fullData:any){
  console.log(this.details)
-this.flag=true
-const attachmentData=this.details.leavePermission[1].uploadFile._attachments.filename.data
-const contentType=this.details.leavePermission[1].uploadFile._attachments.filename.content_type
-this.file = 'data:' + contentType + ';base64,' + attachmentData;
-
-
-  // this.stdService.getFullDocument().subscribe(data=>{
-  //   if(data[this.year]){
+  this.stdService.getFullDocument().subscribe(data=>{
+    if(data[this.year]){
       
-  //     let detail=data[this.year]
-  //     if(detail[registerNumber]){
-  //       let leaveArray=detail[registerNumber].leaveLetter
-  //       console.log(leaveArray)
-  //       leaveArray[0]['bool']=true
-  //       this.stdService.updateDocument(data)
-  //       this.removeDataFromFacultyDetails(fullData)
-        
-        
-  //     }
-  //   }
-  // })
-  // this.removeFromArray(fullData)
+      let detail=data[this.year]
+      if(detail[registerNumber]){
+        let leaveArray=detail[registerNumber].leaveLetter
+        console.log(fullData.leaveDate)
+        leaveArray.forEach((i:any) => {
+          if(fullData.leaveDate===i.leaveDate)
+            i.bool=true
+        });
+        this.stdService.updateDocument(data)
+        this.removeDataFromFacultyDetails(fullData)
+      }
+    }
+  })
+  this.removeFromArray(fullData)
 }
 rejectPermission(fullData:any){
   this.removeDataFromFacultyDetails(fullData)
   this.removeFromArray(fullData)
+}
+hideImage(){
+  this.flag=false
+  this.file=''
 }
 removeDataFromFacultyDetails(fullData: any) {
   this.faculty.getFullDocument().subscribe(data => {
@@ -79,5 +79,13 @@ removeFromArray(data:any){
       this.requestLetters.splice(index,1)
     }
   
+}
+attachDoc(files:any){
+  this.flag=true
+const attachmentData=files._attachments.filename.data
+const contentType=files._attachments.filename.content_type
+this.file = 'data:' + contentType + ';base64,' + attachmentData;
+
+
 }
 }

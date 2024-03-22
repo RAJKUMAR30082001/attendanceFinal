@@ -100,6 +100,7 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/face-api.js/dist/face-api.js"
+              
              
             ]
           }

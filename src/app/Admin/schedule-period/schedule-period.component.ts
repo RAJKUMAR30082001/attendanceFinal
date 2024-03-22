@@ -31,6 +31,7 @@ export class SchedulePeriodComponent implements OnInit{
     console.log(this.period)
     this.initializeCodeForm()
     if(this.period.length>0){
+      // this.error.innerHTML= "Go next"
       this.periodFlag=true
       this.flag=false
     }

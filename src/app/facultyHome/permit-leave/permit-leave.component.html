@@ -7,12 +7,19 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin: 20px auto;
     }
 
     th, td {
@@ -25,10 +32,9 @@
       background-color: #f2f2f2;
     }
 
-    /* Adjust the width of the Reason column */
-    td:nth-child(6) {
-      width: 30%;
-      word-wrap: break-word; /* Allow content to wrap to the next line */
+    td:nth-child(5) {
+      max-width: 200px;
+      word-wrap: break-word;
     }
 
     .buttons {
@@ -48,6 +54,18 @@
     .button-delete {
       background-color: #f44336;
     }
+
+    .image-container {
+      text-align: center;
+      width: 300px;
+      height: 200px;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -62,6 +80,7 @@
       <th>Leave Date</th>
       <th>Reason</th>
       <th>Action</th>
+      <th>Attachment</th>
     </tr>
     <tr *ngFor="let i of requestLetters">
       <td>{{i.name}}</td>
@@ -75,12 +94,19 @@
           <button class="button button-delete" (click)="rejectPermission(i)">Reject</button>
         </div>
       </td>
-      
+      <td>
+        <div class="buttons" *ngIf="i.uploadFile">
+          <button class="button" (click)="attachDoc(i.uploadFile)">View Documents</button>
+        </div>
+      </td>
     </tr>
   </table>
 
-  <div *ngIf="flag">
-   <img [src]="file" alt="">
+  <div *ngIf="flag" class="popup-container">
+    <div class="popup-content">
+      <button (click)="hideImage()" class="close-button">Close</button>
+      <img [src]="file" alt="Leave Letter">
+    </div>
   </div>
 
 </body>
