@@ -7,7 +7,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            
+            padding: 10px;
+            max-height: 100vh; 
+            overflow-y: auto;
+            margin-bottom: 20px;
         }
 
         form {
@@ -42,11 +46,16 @@
         button + button {
             margin-left: 10px;
         }
+        #heading{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="errorMessage"></div>
    <div *ngIf="formFlag">
+    <h1 class="display-9" id="heading">SubjectCode</h1>
+
 <form [formGroup]="subjectCode">
     <label for="subjectCode1">Subject Code 1:</label>
     <input type="text" id="subjectCode1" name="subjectCode1" formControlName="subjectCode1" placeholder="Enter subject code">
@@ -82,11 +91,12 @@
     <button type="button" (click)="nextPage()">Next</button>
 </form>
 </div> 
-
     <div *ngIf="attendanceFlag" class="displaySubject">
+        <h1 class="display-9" id="heading">Schedule</h1>
+
         <div *ngIf="currentDay<4">
             <form [formGroup]="periodForm">
-                <h3>{{ getDay() }}</h3>
+                <h3>{{ getDay()| uppercase }}</h3>
               
                 <label for="subjectName">Subject Name:</label>
                 <input type="text" id="subjectName" name="subjectName" formControlName="subjectName" placeholder="Enter subjectName">

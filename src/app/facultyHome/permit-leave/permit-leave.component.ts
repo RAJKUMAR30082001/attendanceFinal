@@ -65,7 +65,7 @@ removeDataFromFacultyDetails(fullData: any) {
         // Update the leavePermission array in the document
         departmentData[this.details.email].leavePermission = detail;
 
-        // Update the document in the database
+       
         this.faculty.updateDocument(data);
       }
     }

@@ -37,19 +37,24 @@
       padding: 6px 10px;
       cursor: pointer;
     }
+    h2{
+      font-weight: bolder;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
 
-<h2>Student Details</h2>
+<h2 class="text-center" >Student Details</h2>
 <div class="errorMessage"></div>
+<div class="container">
 <label for="registerNumberInput">Register Number:</label>
 <input type="text" id="registerNumberInput" placeholder="Enter Register Number" (input)="getRegisterNo($event)" >
 
 <label for="departmentInput">Department:</label>
 <input type="text" id="departmentInput" placeholder="Enter Department" (input)="getDepartment($event)" >
 
-<button (click)="filter()">Filter</button>
+<button (click)="filter()" class="btn btn-primary btn-lg">Filter</button>
 
 <table>
     <caption>Students List 2024</caption>
@@ -71,7 +76,7 @@
     <!-- Add more rows as needed -->
   </tbody>
 </table>
-
+</div>
 
 
 </body>
