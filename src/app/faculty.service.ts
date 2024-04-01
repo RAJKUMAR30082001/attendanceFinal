@@ -78,13 +78,21 @@ export class FacultyService {
         // Add faculty data to existing department
         details[email] = data;
         this.updateDocument(res);
-        this.route.navigate(['/home'])
+        errorMessage.innerHTML="Registered Successfully Wait For Admin Approval"
+        setTimeout(() => {
+          this.route.navigate(['/home'])
+        }, 3000);
+       
       } else {
         // Create new department data
         res[department] = {
           [email]: data
         };
         this.updateDocument(res);
+        errorMessage.innerHTML="Registered Successfully Wait For Admin Approval"
+        setTimeout(() => {
+          this.route.navigate(['/home'])
+        }, 3000);
       }
     });
   }

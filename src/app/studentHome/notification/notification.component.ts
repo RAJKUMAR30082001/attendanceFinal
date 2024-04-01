@@ -25,6 +25,7 @@ export class NotificationComponent implements OnInit {
       this.hours=data.hours
       this.notify(this.userDetails)
     })
+    this.absenceNotification()
    
     
   }
@@ -74,6 +75,13 @@ export class NotificationComponent implements OnInit {
     console.log(str)
     this.notificationContainer.push(str)
     console.log(this.notificationContainer)
+  }
+
+  absenceNotification(){
+    let notify=this.userDetails.notification
+    notify.forEach((item:string)=>{
+      this.addString(item)
+    })
   }
   
 }

@@ -60,6 +60,7 @@ export class StudentCouchService {
 
             studentData[registerNumber] = details;
             this.updateDocument(data)
+            this.router.navigate(['/faceRegister',registerNumber])
           } 
           else {
             // Academic year does not exist, create it and add the student details inside it
@@ -67,6 +68,7 @@ export class StudentCouchService {
               [registerNumber]: details
             };
             this.updateDocument(data);
+            this.router.navigate(['/faceRegister',registerNumber])
           }
         } catch (error) {
           console.error('Error processing student details:', error);
