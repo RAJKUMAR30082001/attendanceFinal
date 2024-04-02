@@ -34,6 +34,7 @@ export class FacultyService {
     let subjectCode: string = data.subjectCode;
     let department: string = data.department;
     let subject: string = data.subject;
+    let employeeId:number=data.employeeId
 
     this.http.get<any>(this.baseUrl, { headers: this.Header }).subscribe((res) => {
       // Check if department data exists
@@ -64,6 +65,7 @@ export class FacultyService {
         // Check if subjectCode or subject already exists
         let subjectCodeExist = key.some(keys => details[keys].subjectCode === subjectCode);
         let subjectExist = key.some(keys => details[keys].subject === subject);
+        let employeeIdExist=key.some(keys=>details[keys].employeeId===employeeId)
 
         if (subjectCodeExist) {
           errorMessage.innerHTML = "Subject code already exists";
@@ -74,17 +76,30 @@ export class FacultyService {
           errorMessage.innerHTML = "Subject already exists";
           return;
         }
+        if(employeeIdExist){
+          errorMessage.innerHTML="employeeId already exists"
+          return
+        }
 
         // Add faculty data to existing department
         details[email] = data;
         this.updateDocument(res);
-        this.route.navigate(['/home'])
+        errorMessage.innerHTML = "Registered Successfully Wait for Admin Approval";
+
+        setTimeout(()=>{
+          this.route.navigate(['/home'])
+        },2000)
       } else {
         // Create new department data
         res[department] = {
           [email]: data
         };
         this.updateDocument(res);
+        errorMessage.innerHTML = "Registered Successfully Wait for Admin Approval";
+
+        setTimeout(()=>{
+          this.route.navigate(['/home'])
+        },2000)
       }
     });
   }

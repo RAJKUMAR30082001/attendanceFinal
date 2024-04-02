@@ -44,6 +44,7 @@ export class StudentLoginComponent implements OnInit {
     this.isLog=await(this.admin.checkAdmin(studentDetails.password,studentDetails.registerNumber,this.flag))
     if(this.isLog){
       this.admin.setValue(this.isLog)
+      this.video.srcObject=null
       this.route.navigate(['/adminHome']);
     }}
     else{
@@ -53,7 +54,7 @@ export class StudentLoginComponent implements OnInit {
       let finalResult=await this.faceApi.faceMatchDescriptor(this.loginForm.value.registerNumber,this.flag)
       console.log(finalResult,this.loginForm.value.registerNumber)
       if(finalResult.split(' ')[0]===this.loginForm.value.registerNumber){
-      this.service.login(studentDetails,this.errorMessage)
+      this.service.login(studentDetails,this.errorMessage,this.video)
     }
     else{
       this.styleFlag=false
@@ -85,6 +86,7 @@ export class StudentLoginComponent implements OnInit {
               );
               this.styleFlag=true
               this.errorMessage.innerHTML="face scanned successfully"
+             
               console.log(results)
               this.flag=results
               this.inputFlag=true

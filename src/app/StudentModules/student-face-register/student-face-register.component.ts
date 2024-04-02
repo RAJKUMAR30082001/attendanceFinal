@@ -25,9 +25,12 @@ export class StudentFaceRegisterComponent implements OnInit {
     this.startVideo()
   }
   async startVideo(){
-    // this.errorDiv.innerHTML=""
+    this.errorDiv.innerHTML=""
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (this.video) {
+        this.video.srcObject = stream;}
+
       if (this.video) {
         this.video.srcObject = stream;
         this.video.addEventListener('play', async()=>{
@@ -35,6 +38,7 @@ export class StudentFaceRegisterComponent implements OnInit {
             const results:[]=await this.faceApi.startInterval(this.video,this.RegisterNumber,this.errorDiv)
             console.log("results",results);
             if(results.length>0){
+              this.video.srcObject=null
               this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
               this.flag='Scanned'
             }
@@ -44,7 +48,8 @@ export class StudentFaceRegisterComponent implements OnInit {
         }
         })
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error accessing webcam:', error);
     }
   }

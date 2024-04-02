@@ -1,9 +1,21 @@
+<style>
+   body{
+    background-image: url('../../assets/tce.jpg'); /* Replace 'your-image-url.jpg' with the path to your image */
+    background-size: cover;
+    background-position: center;
+    }
+</style>
+
+
+<body>
+  
+
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="registration-form">
-          <h2 class="text-center mb-4">Student Register</h2>
-          <div class="errorMessage"></div>
+          <h2 class="text-center mb-4" style="color: rgb(252, 244, 9); font-family: serif">Student Register</h2>
+          <div class="errorMessage" style="color: red;font-weight: 400;"></div>
   
           <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
            <div class="mb-3 row">
@@ -98,11 +110,11 @@
               </div>
             </div>
            <div class="center-btn">
-            <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid">Proceed</button>
+            <button type="submit" class="btn btn-primary btn-block custom-btn" id="btn"  [disabled]="registerForm.invalid">Proceed</button>
         </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-  
+</body> 

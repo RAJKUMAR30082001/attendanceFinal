@@ -75,5 +75,12 @@ export class NotificationComponent implements OnInit {
     this.notificationContainer.push(str)
     console.log(this.notificationContainer)
   }
+
+  absenceNotification(){
+    let notify=this.userDetails.notification
+    notify.forEach((item:string)=>{
+      this.addString(item)
+    })
+  }
   
 }

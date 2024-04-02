@@ -21,6 +21,8 @@ export class FacultyRegisterComponent implements OnInit {
     this.errorMessage=this.render.selectRootElement(".errorMessage")
     this.facultyForm=this.fb.group({
       name:['',[Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      employeeId:['',[Validators.required,Validators.pattern(/^[0-9]+$/),Validators.maxLength(4)]],
+
       email:['',[Validators.required,Validators.email]],
       password: [
         '',
@@ -36,6 +38,7 @@ export class FacultyRegisterComponent implements OnInit {
     if (this.facultyForm.valid){
       this.facultyDetails={
         name:this.facultyForm.value.name?this.facultyForm.value.name.toLowerCase():"",
+        employeeId:this.facultyForm.value.employeeId,
         email:this.facultyForm.value.email?this.facultyForm.value.email.toLowerCase():'',
         password:this.facultyForm.value.password?this.facultyService.hashedPassword(this.facultyForm.value.password):'',
         department:this.facultyForm.value.department?this.facultyForm.value.department.toLowerCase():"",
@@ -48,7 +51,7 @@ export class FacultyRegisterComponent implements OnInit {
       console.log(this.facultyDetails)
       this.facultyService.putData(this.facultyDetails,this.errorMessage)
       console.log("success")
-      this.facultyForm.reset()
+      // this.facultyForm.reset()
       // this.route.navigate(['/home'])
 
       

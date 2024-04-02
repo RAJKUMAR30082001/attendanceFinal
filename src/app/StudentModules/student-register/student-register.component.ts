@@ -37,11 +37,11 @@ export class StudentRegisterComponent implements OnInit {
       lastName: ['', [Validators.pattern(/^[a-zA-Z\s]+$/)]],
       email: ['', [Validators.required, Validators.email]],
       department: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      registerNumber: ['', [Validators.required, Validators.minLength(10)]],
+      registerNumber: ['', [Validators.required, Validators.minLength(10),Validators.pattern(/^917722[Yy]\d+$/
+      )]],
       password: [
         '',
-        [Validators.required, Validators.minLength(8), Validators.pattern(/^917722[Yy]\d+$/
-          )]
+        [Validators.required, Validators.minLength(8),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z]).+$/) ]
       ],
       confirmPassword: [
         '',
@@ -55,6 +55,7 @@ export class StudentRegisterComponent implements OnInit {
   }
 
   onRegister() {
+    console.log(this.registerForm.value)
     this.errorDivElement.innerHTML=''
     if (this.registerForm.valid) {
       if (this.checkPasswordCorrect(this.registerForm.value.password, this.registerForm.value.confirmPassword)) {
@@ -71,10 +72,10 @@ export class StudentRegisterComponent implements OnInit {
           numberOfClasses:this.getNumberOfClasses(),
           attendanceRecord:this.AttendanceRecord()
         };
-
+        console.log(this.studentDetails)
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);
         this.registerForm.reset();
-        this.router.navigate(['/faceRegister',this.studentDetails.registerNumber])
+       
       } else {
         this.errorDivElement.innerHTML="Enter correct password"
       }

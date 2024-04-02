@@ -1,73 +1,144 @@
-.body {
-    background-image: url('../../assets/tce.jpg'); /* Replace with your background image */
-    background-size: cover;
-    background-position: center;
-    height: 120vh;
-    margin: 0;
-    padding: 0;
+.wrapper{
+  display: flex;
+}
+.wrapper .static-txt{
+  color: #e60c0c;
+  font-size: 50px;
+  font-weight: 400;
+}
+.static-txt{
+  margin-top: 10px;
+}
+.wrapper .dynamic-txts{
+  
+  height: 90px;
+  line-height: 90px;
+  overflow: hidden;
+}
+.dynamic-txts li{
+  font-family: serif;
+  list-style: none;
+  color: #FC6D6D;
+  font-size: 60px;
+  font-weight: 500;
+  position: relative;
+  top: 0;
+  animation: slide 12s steps(4) infinite;
+}
+@keyframes slide {
+  100%{
+    top: -360px;
   }
-
-  .navbar {
-  background-color: rgba(51, 4, 4, 0.8);
-  padding:0;
+}
+.dynamic-txts li span{
+  position: relative;
+}
+.dynamic-txts li span::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background:#ffffff;
+ 
+  animation: typing 3s steps(10) infinite;
+}
+@keyframes typing {
+  100%{
+    left: 100%;
+    margin: 0 -35px 0 35px;
   }
+}
+.flip-box {
+  background-color: transparent;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #fc0c0c;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
 
-  .navbar-brand {
-    padding: 0;
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side */
+.flip-box-front {
+  background-color: rgba(240, 83, 39, 0.5);
+  color: rgb(230, 246, 8);
+  pointer-events: auto;
+}
+
+/* Style the back side */
+.flip-box-back {
+  background-color:  rgba(240, 83, 39, 0.5);
+  color: rgb(248, 138, 13);
+  transform: rotateY(180deg);
+
+}
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-links {
+  margin-left: auto; /* Pushes the links to the right */
+ 
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 5px 20px;
+  border-radius: 50%;
+ 
+}
+
+.nav-link:hover {
+  border-radius: 100%;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px 5px #fff; /* Initial glow effect */
+    transform: scale(1); /* Initial size */
   }
-  .navbar-nav {
-margin: 0;
+  to {
+    box-shadow: 0 0 20px 10px #fff; /* Final glow effect */
+    transform: scale(1.2); /* Increase size */
   }
-
-  .navbar-brand img {
-   max-width: 100%;
-  }
-  .navbar-nav .nav-link {
-color: #fff; /* Set text color to white */
 }
 
-/* Blink effect animation */
-@keyframes blink {
-0%, 100% {
-  opacity: 1;
-}
-50% {
-  opacity: 0;
-}
-}
 
-.navbar-nav .nav-link.blink {
-animation: blink 1s infinite; /* Apply the blink animation */
-}
-.navbar-nav .nav-link:hover {
-color: white; /* Change text color to white on hover */
-animation: none; /* Disable the blink animation on hover */
-}
 
-  .btn-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
 
-  .btn-container button {
-margin: 10px;
-background-color: yellow; /* Set button background color to yellow */
-color: #0a0a0a; /* Set text color to white */
-border: none;
-}
-
-.btn-container button:hover {
-  color:aliceblue;
-cursor: pointer;
-background-color: red; /* Change background color to red on hover */
-}
-
-  .footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-
-  }

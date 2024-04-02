@@ -22,8 +22,7 @@ export class PermitLetterComponent implements OnInit {
  public uploadFile!:File
  couchFile!:any
  ngOnInit():void {
-  this.facultyService.facultyForLetter().subscribe(data=>
-    console.log(data))
+  
   this.formValidation()
   this.names=this.check.getData().firstName.toUpperCase()
  this.registerNumbers=this.check.getData().registerNumber

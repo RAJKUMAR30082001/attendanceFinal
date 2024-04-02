@@ -11,6 +11,7 @@ import { periodWiseData } from 'src/app/student-data';
 })
 export class SchedulePeriodComponent implements OnInit{
   public period = [];
+  public name:string='raj'
   public periodFlag:boolean=false
   public divElement!:HTMLDivElement
   public flag:boolean=true

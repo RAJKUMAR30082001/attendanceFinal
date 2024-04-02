@@ -25,9 +25,11 @@
 
 <div class="container">
 <table class="table table-bordered table-hover">
+  <caption>Faculty Registered</caption>
   <thead class="table-primary">
     <tr>
       <th>Name</th>
+      <th>EmployeeId</th>
       <th>Department</th>
       <th>Subject Code</th>
       <th>Subject</th>
@@ -37,6 +39,7 @@
   <tbody>
     <tr *ngFor="let faculty of facultyDataToPermit">
       <td>{{ faculty.name }}</td>
+      <td>{{faculty.employeeId}}</td>
       <td>{{ faculty.department }}</td>
       <td>{{ faculty.subjectCode }}</td>
       <td>{{ faculty.subject }}</td>
@@ -50,6 +53,5 @@
 </div>
 
 <!-- Bootstrap JS (Optional) -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
 
 </body>

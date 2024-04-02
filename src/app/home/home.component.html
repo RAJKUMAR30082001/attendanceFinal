@@ -1,31 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CDN -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: red;
+  }
+  
+  /* Navigation bar styles */
+  .navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Align items to the start and end of the container */
+    align-items: center; /* Vertically center the items */
+}
 
-<div class="body">
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="#">
-    <img src="../../assets/logochanged.png" alt="Logo" height="70"> <!-- Replace with your logo image -->
-  </a>
-  <div class="collapse navbar-collapse justify-content-end">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link blink" href="#" [routerLink]="['/login']">Student Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link blink" href="#" [routerLink]="['/facultyLogin']">Faculty Login</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+.navbar-brand {
+    background-image: url('../../assets/logochanged.png');
+    width: 40px; /* Set width as needed */
+    height: 40px; /* Set height as needed */
+    background-size: cover; /* Ensure the logo covers the specified dimensions */
+    margin-right: auto; /* Push other elements to the right */
+    top:0;
+    right: 0;
+}
+  /* Background image styles */
+  .background-image {
+    position: absolute;
+    margin-top: 60px;
+    top: 0;
+    right: 0; 
+    width: 100vw;
+    height: calc(100vh - 60px - 100px);
+    background-image: url('../../assets/tce.jpg');
+    background-size: cover; /* Adjust background-size property */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-position: center;
+   
+  }
 
-<div class="btn-container">
-  <button type="button" class="btn btn-primary" [routerLink]="['/studentRegister']">Student Register</button>
-  <button type="button" class="btn btn-secondary" [routerLink]="['/facultyRegister']">Faculty Register</button>
-</div>
-<footer class="footer">
-  <p>Follow us on social media:</p>
+  /* Container styles */
+  .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-left: 300px;
+
+  }
+
+  /* Content styles */
+  .content {
+    text-align: center;
+    color: rgb(228, 13, 13);
+    background-color: black;
+
+  }
+
+  /* Button styles */
+  .btn {
+    margin: 30px;
+    padding: 10px 20px;
+    background-color: #7a630c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Button hover styles */
+  .btn:hover {
+    
+    background-color: #e83010; /* Keep the same background color */
+    color: black; /* Change text color */
+    box-shadow: 0 0 10px 5px #ddec07; /* Add glow effect on hover */
+}
+  
+
+  /* Footer styles */
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+   position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* Social media icon styles */
+  .social-icons a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 20px;
+  }
+  .align {
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
  
-  <p>Copyright © 2024 Thiagarajar College of Engineering, Madurai 625 015.</p>
-</footer>
-</div>
+}
+.link{
+  display: flex;
+  padding-inline: 20px;
+}
+.centerBox{
+  border-color: black
+}
 
+</style>
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar">
+    <div class="navbar-brand"></div>
+    <div class="link">
+      <a href="" class="nav-link" [routerLink]="['/login']">Student Login</a>
+      <a href="" class="nav-link" [routerLink]="['/facultyLogin']">Faculty Login</a></div>
+  </nav>
 
+  <!-- Background image -->
+  <div class="background-image"></div>
+  <!-- Container with content -->
+  <div class="centerBox" style="background-color: aqua;">
+      <!-- <div class="wrapper">
+        <div class="static-txt" style="font-family: serif;">Welcome To</div>
+        <ul class="dynamic-txts">
+          <li><span>Thiagarajar</span></li>
+          <li><span>college</span></li>
+          <li><span>Attendance</span></li>
+          <li><span>System</span></li>
+        </ul>
+      </div> -->
+     
+    <div class="container">
+      <div class="flip-box">
+        <div class="flip-box-inner">
+          <div class="flip-box-front">
+           <p><strong>தியாகராஜர் பொறியியல் கல்லூரிக்கு</strong><br>
+            <strong style="color:black;">எமது நோக்கம்</strong><br>
+              வலுவான நெறிமுறை மதிப்புகளுடன் உலகத்தரம் வாய்ந்த தரமான தொழில்நுட்பக் கல்வியை வழங்குதல்.</p>
+           
+            
+         
+          </div>
+          <div class="flip-box-back">
+                 
 
+            <button type="button" class="btn" [routerLink]="['/studentRegister']">Student Register
+
+            </button>
+            <button type="button" class="btn" [routerLink]="['/facultyRegister']">Faculty Register
+
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p>Copyright © 2024 Thiagarajar College of Engineering, Madurai 625 015.</p>
+  </footer>
+  </body>
+</html>

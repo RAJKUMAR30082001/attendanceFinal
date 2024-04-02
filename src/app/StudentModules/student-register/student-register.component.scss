@@ -1,14 +1,14 @@
 
 .container {
-    background-color: rgb(203, 119, 119);
-    max-width: 700px; /* Adjust the maximum width as per your requirement */
+    background-color: rgba(18, 16, 16, 0.5);
+    max-width: 600px; /* Adjust the maximum width as per your requirement */
     height: auto; /* You can set a specific height if needed or use auto for dynamic height */
     padding: 20px; /* Add some padding for better appearance */
     
 }
 
 .registration-form {
-    padding: 20px;
+   margin: 0
 }
 .errorMessage{
     font-size: large;
@@ -19,8 +19,28 @@
 }
 
 .center-btn{
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+label{
+    color: rgb(220, 239, 11);
+}
+.custom-btn {
+    background-color: rgb(11, 11, 11);
+    border: none;
+    color: rgb(66, 232, 10);
+    box-shadow: none;
+    transition: box-shadow 0.3s;
+}
+
+.custom-btn:hover {
+    box-shadow: 0 0 10px rgba(6, 250, 6); 
+    color: rgb(10, 220, 38);
+}
+
+.error-message{
+    color: red;
 }

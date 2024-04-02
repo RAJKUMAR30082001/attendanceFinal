@@ -26,6 +26,7 @@ export interface loginDetails{
 
 export interface facultyLogin{
     name:string
+    employeeId:number
     email:string
     password:string
     subject:string

@@ -11,10 +11,10 @@ import * as CryptoJS from 'crypto-js';
 })
 export class StudentCouchService {
 
-  readonly baseURL = 'http://localhost:5984/studentdatabase/studentDetails';
-  readonly apiUrl="http://localhost:5984/studentdatabase"
-  readonly username = 'rajkumar';
-  readonly password = 'rajraina45';
+  readonly baseURL = 'https://192.168.57.185:5984/studentdatabase/studentDetails';
+  readonly apiUrl="https://192.168.57.185:5984/studentdatabase"
+  readonly username = 'd_couchdb';
+  readonly password = 'Welcome#2';
   public year=new Date().getFullYear()
 
   constructor(private http: HttpClient,private router:Router,private check:CheckValidityService) { }
@@ -60,13 +60,18 @@ export class StudentCouchService {
 
             studentData[registerNumber] = details;
             this.updateDocument(data)
+            console.log(registerNumber)
+            this.router.navigate(['/faceRegister',registerNumber])
           } 
           else {
             // Academic year does not exist, create it and add the student details inside it
             data[year] = {
               [registerNumber]: details
             };
+            console.log(data)
             this.updateDocument(data);
+            this.router.navigate(['/faceRegister',registerNumber])
+
           }
         } catch (error) {
           console.error('Error processing student details:', error);
@@ -81,7 +86,7 @@ export class StudentCouchService {
           console.log('Student details added/updated successfully:', response);
         })
   }
-  login(LoginDetails:loginDetails,errorMessage:HTMLDivElement) {
+  login(LoginDetails:loginDetails,errorMessage:HTMLDivElement,video:HTMLVideoElement) {
     const registerNumber=LoginDetails.registerNumber? LoginDetails.registerNumber : '';
     const password=this.hashedPassword(LoginDetails.password)
     // const password=LoginDetails.password
@@ -102,6 +107,8 @@ export class StudentCouchService {
         const student = response['rows'][0]?.value;
         if (student && student.password === password) {
           this.check.SetData(student)
+          video.srcObject=null
+          
           // Perform further actions for a successful login
         } else {
           errorMessage.innerHTML='Invalid password';

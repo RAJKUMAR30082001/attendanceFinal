@@ -6,7 +6,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: black;
+    background-color: rgb(33, 31, 31);
 }
 canvas{
     position: absolute;
@@ -17,7 +17,7 @@ canvas{
     left: 0;
 }
 .container{
-    background-color: red;
+    background-color: rgba(12, 11, 11, 0.5);
     width: 500px;
     height: 100vh;
 }
@@ -30,8 +30,17 @@ canvas{
     justify-content: center;
 }
 #Button{
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 200px;
+    border: none;
+}
+a{
+    text-decoration: none;
+}
+
+.anchor{
+    padding-top: 100px;
 }

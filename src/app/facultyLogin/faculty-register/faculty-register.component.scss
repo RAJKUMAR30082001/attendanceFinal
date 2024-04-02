@@ -1,0 +1,67 @@
+
+  
+    .container {
+        background-color:rgba(15, 14, 14, 0.5);
+        padding: 20px; 
+        border-radius: 10px;
+        max-width: 500px; 
+        margin: 0 auto; 
+        margin-top: 0; 
+        max-height: 100vh; 
+        overflow-y: auto;
+       
+    }
+    .container::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar width */
+}
+
+.container::-webkit-scrollbar-track {
+    background: transparent; /* Set scrollbar track color to transparent */
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: transparent; /* Set scrollbar thumb color to transparent */
+}
+
+    .error-message {
+        color: red; 
+        font-size: 14px; 
+    }
+
+    
+    .container input[type="text"],
+    .container input[type="email"],
+    .container input[type="password"],
+    .container button {
+        max-width: 100%;
+    }
+    .btn-custom {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .outerdiv{
+      
+      background-color: rgb(200, 187, 187,0.1);
+        padding: 20px; 
+        border-radius: 10px;
+        max-width: 500px; 
+        margin: 0 auto; 
+       
+    }
+
+    .btn-custom:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+    label{
+      color: #f6f3f3;
+    }
