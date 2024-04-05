@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaceapiService } from 'src/app/faceapi.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
@@ -8,7 +8,7 @@ import { StudentCouchService } from 'src/app/student-couch.service';
   templateUrl: './student-face-register.component.html',
   styleUrls: ['./student-face-register.component.scss']
 })
-export class StudentFaceRegisterComponent implements OnInit {
+export class StudentFaceRegisterComponent implements OnInit, OnDestroy {
   video!:HTMLVideoElement
   errorDiv!:HTMLDivElement
   flag:string='notScanned'
@@ -38,7 +38,7 @@ export class StudentFaceRegisterComponent implements OnInit {
             const results:[]=await this.faceApi.startInterval(this.video,this.RegisterNumber,this.errorDiv)
             console.log("results",results);
             if(results.length>0){
-              this.video.srcObject=null
+              
               this.Couch.faceUpdate(results,this.RegisterNumber,this.currentYear)
               this.flag='Scanned'
             }
@@ -51,6 +51,20 @@ export class StudentFaceRegisterComponent implements OnInit {
     } 
     catch (error) {
       console.error('Error accessing webcam:', error);
+    }
+  }
+
+  ngOnDestroy(): void {
+    console.log("destroyed")
+    if (this.video) {
+      const stream = this.video.srcObject as MediaStream;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => {
+          track.stop();
+        });
+      }
+      this.video.srcObject = null; 
     }
   }
   

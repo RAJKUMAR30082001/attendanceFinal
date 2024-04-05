@@ -95,6 +95,7 @@
                 <a href="" class="sidebar-button" (click)="notification($event)">Notification
                     <span class="notification-mark"  *ngIf="redMark"></span>
                 </a>
+                <a href="#" class="sidebar-button" (click)="holidayNotification($event)">Holiday Update</a>
                 <a href="#" (click)="Logout()" class="sidebar-button" id="logout">Logout</a>
             </div>
         </div>
@@ -106,6 +107,7 @@
         <div *ngIf="notificationFlag" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <app-notification></app-notification>
         </div>
+        <div *ngIf="holiday" ><app-holiday-notification></app-holiday-notification></div>
     </div>
 </body>
 </html>

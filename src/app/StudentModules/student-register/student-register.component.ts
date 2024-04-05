@@ -70,11 +70,13 @@ export class StudentRegisterComponent implements OnInit {
           leaveLetter:[],
           notification:[],
           numberOfClasses:this.getNumberOfClasses(),
-          attendanceRecord:this.AttendanceRecord()
+          attendanceRecord:this.AttendanceRecord(),
+          seen:[],
+          unSeen:[]
         };
         console.log(this.studentDetails)
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);
-        this.registerForm.reset();
+        // this.registerForm.reset();
        
       } else {
         this.errorDivElement.innerHTML="Enter correct password"
@@ -82,6 +84,7 @@ export class StudentRegisterComponent implements OnInit {
     }
   }
   getNumberOfClasses():any{
+    console.log(this.adminData)
     return Object.fromEntries(
       this.adminData.map(e => [e, 0])
     );

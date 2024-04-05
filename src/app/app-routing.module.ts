@@ -18,6 +18,7 @@ import { SchedulePeriodComponent } from './Admin/schedule-period/schedule-period
 import { RemoveStudentComponent } from './Admin/remove-student/remove-student.component';
 import { NotificationComponent } from './studentHome/notification/notification.component';
 import { AttendanceViewComponent } from './studentHome/attendance-view/attendance-view.component';
+import { HolidayNotificationComponent } from './studentHome/holiday-notification/holiday-notification.component';
 
 const routes: Routes = [
   {path:'home',component:HomeComponent },
@@ -38,7 +39,7 @@ const routes: Routes = [
   {path:"deleteStudent",component:RemoveStudentComponent},
   {path:"notification",component:NotificationComponent},
   {path:"attendance",component:AttendanceViewComponent},
-
+  {path:"holidayNotificationStd",component:HolidayNotificationComponent},
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

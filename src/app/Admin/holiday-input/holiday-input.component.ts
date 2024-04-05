@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AdminService } from 'src/app/admin.service';
+import { FacultyService } from 'src/app/faculty.service';
+import { StudentCouchService } from 'src/app/student-couch.service';
 
 @Component({
   selector: 'app-holiday-input',
@@ -8,6 +10,8 @@ import { AdminService } from 'src/app/admin.service';
 })
 export class HolidayInputComponent implements OnInit {
   public flag:boolean=false
+  public monthArray:string[]=[]
+  public leaveReason:string=''
   public year= new Date().getFullYear();
   public dates: string[] = [];
   public month:string=''
@@ -15,8 +19,10 @@ export class HolidayInputComponent implements OnInit {
   public errorMes:string=''
   public arrayOfMonths:string[]=[]
   public value:string=''
+  public count:number=1
+  public updateFlag:boolean=false
+  public updateValue!:string
   public months:string[] = [
-    "Select Month",
     "January",
     "February",
     "March",
@@ -32,138 +38,219 @@ export class HolidayInputComponent implements OnInit {
 ];
 
 
-  constructor(private admin:AdminService){}
+  constructor(private admin:AdminService,private faculty:FacultyService, private stdService:StudentCouchService){}
   ngOnInit(): void {
     this.admin.getUrl().subscribe(data=>{
     data.holiday.forEach((element: any) => {
       this.arrayOfMonths.push(Object.keys(element)[0])
+      
     });
     })
   }
-  enteredDates(event:Event){
+  enteredDate(event:Event)
+  {
     this.value=(event.target as HTMLInputElement).value;
-    if(this.validate(this.value)){
-      if(!this.dates.includes(this.value))
-      this.dates.push(this.value)
-    }
-    
-   
+    this.validate(this.value)
   }
-  selectedMonth(event:Event){
-    this.month=(event.target as HTMLSelectElement).value;
-    console.log(this.month,"i am month")
+  updatedDate(event:Event)
+  {
+    this.updateValue=(event.target as HTMLInputElement).value;
+    this.validate(this.updateValue)
   }
-
   validate(date:string):boolean{
     this.errorMes=' '
-    if(this.month){
-      let index=String(this.months.indexOf(this.month)+1)
-      if(Number(index)<10){
-        index="0"+index
+    let dateArray=date.split("-")
+    console.log(date)
+    this.month=this.months[Number(dateArray[1])-1]
+    
+    if(dateArray[0]!==String(new Date().getFullYear())){
+      this.errorMes="Enter valid year"
+      return false
       }
-      let dateArray=date.split("-")
-      if(dateArray[0]!==String(new Date().getFullYear())|| dateArray[1]!==index){
-        this.errorMes="Enter valid year or month"
-        
-        return false
-      }
-        return true
-      }
-    else{
-      this.errorMes="Select the month"
+    if(this.check(date)){
+      this.errorMes="Date already Passed"
       return false
     }
-  }
-  check(dates: string[]): boolean {
-   
-    const allDatesValid = dates.every((element) => {
-      return new Date(element).getTime() >= new Date().getTime();
-    });
-  
-    if (!allDatesValid) {
-      this.errorMes = "Date already passed";
-    }
-  
-    
-    return allDatesValid;
-  }
-  addDates(){
-
-    console.log(this.arrayOfMonths,this.month)
-    if(this.arrayOfMonths.includes(this.month)){
       
-      this.errorMes="Month already exist if any modification please update"
+      return true
+        
+      
+      }
+    check(dates: string): boolean {
+  
+  
+      return new Date(dates).getTime() < new Date().getTime();
+    }
+     
+    
+     clear(){
+      this.leaveReason=''
+      this.errorMes=''
+      const datesInput = document.getElementById('dates') as HTMLInputElement;
+     
+      if (datesInput) {
+        datesInput.value = '';
+      }
+
+     }
+  
+  
+ 
+  addDates(){
+      
+  this.updateFlag=false
+
+  
+    if(this.arrayOfMonths.includes(this.month)){
+      this.admin.getUrl().subscribe(data=>{
+       data.holiday.forEach((item:any)=>{
+        if(Object.keys(item)[0]===this.month){
+          if(item[this.month].includes(this.value)){
+            this.errorMes="date already exist any modification please update"
+          }
+          else{
+          item[this.month].push(this.value)
+          let notificationMes=`${this.value} is declare as holiday for ${this.leaveReason}`
+          this.updateNotificationStudent(notificationMes)
+          this.updateNotificationFaculty(notificationMes)
+          this.admin.updateAdmin(data)}
+        }
+       })
+      })
     }
     else{
       this.admin.getUrl().subscribe(data=>{
         let array={
-          [this.month]: this.dates
+          [this.month]: [this.value]
         }
         data.holiday.push(array)
+        let notificationMes=`${this.value} is declare as holiday for ${this.leaveReason}`
+        this.updateNotificationStudent(notificationMes)
+        this.updateNotificationFaculty(notificationMes)
+        
         this.admin.updateAdmin(data)
       })
     }
-    this.clearData()
-
-  }
-  updateDates(){
     
-    if (this.arrayOfMonths.includes(this.month)) {
-      if (this.check(this.dates)) {
-        this.admin.getUrl().subscribe(data => {
-          data.holiday.forEach((element: any) => {
-            const currentMonth = Object.keys(element)[0];
+
+  }
+  checkValid(){
+    return new Date(this.value).getTime()< new Date(this.updateValue).getTime()
+  }
+
+  updateDates() {
+    this.updateFlag = true;
+    console.log(this.updateValue)
+    if(this.updateValue!==undefined){
+    const storedDate = this.value.split('-');
+    const currentDay = this.updateValue.split('-');
+  
+    if (storedDate[1] !== currentDay[1]) {
+      this.errorMes = "Enter valid month";
+      return;
+    }
+  
+    if (!this.checkValid()) {
+      this.errorMes = "Date already passed";
+      return;
+    }
+  
+    this.admin.getUrl().subscribe(res => {
+      
+      const foundItem = res.holiday.find((item:any )=> {
+        const key = Object.keys(item)[0];
+      
+        return item[key].includes(this.value);
+      });
+      const foundItems = res.holiday.find((item:any )=> {
+        const key = Object.keys(item)[0];
+      
+        return item[key].includes(this.updateValue);
+      });
+     
+      if (foundItem && foundItems===undefined) {
+       
+        const key = Object.keys(foundItem)[0];
+        const index = foundItem[key].indexOf(this.value);
+        
+        if (index !== -1) {
+          foundItem[key][index] = this.updateValue;
             
-            if (currentMonth === this.month && !this.flag) {
-              
-              this.dates.forEach((date: string) => {
+              let message=`leave on ${this.value} is updated to ${this.updateValue} for ${this.leaveReason}`
+              this.updateNotificationStudent(message)
+              this.updateNotificationFaculty(message)
+              this.admin.updateAdmin(res)
+            
 
-                element[currentMonth].push(date);
-              });
-  
-              element[currentMonth] = [...new Set(element[currentMonth])];
-            }
-            else if(this.flag && currentMonth === this.month){
-              this.dates.forEach((date: string) => {
-                const index = element[currentMonth].indexOf(date);
-                if (index !== -1) {
-                  element[currentMonth].splice(index, 1);
-                }
-              });
-              this.flag=false
-            }
-          });
-  
-          this.admin.updateAdmin(data);
-          this.clearData()
-        });
+         
+        } else {
+          this.errorMes = "Enter date is not exist";
+        }
+      } else {
+        this.errorMes = "Enter date is not exist or Update date already exist";
       }
-    }
-  else{
-   
-    this.errorMes="Month did not exist"
-    this.clearData()
+    });
+  }else{
+    console.log("comming")
   }
-
-  
-  
-  }
-  clearData(){
-    const datesInput = document.getElementById('dates') as HTMLInputElement;
-    const monthSelect = document.getElementById('month') as HTMLSelectElement;
-
-    if (datesInput) {
-      datesInput.value = '';
-    }
-    if (monthSelect) {
-      monthSelect.value = '';
-    }
-    this.month=''
-    this.dates=[]
-  }
-
-  deleteDates(){
-    this.flag=true
-  }
-  
 }
+
+deleteDate(){
+  this.updateFlag=false
+  console.log("delete")
+  if(this.value!==''){
+    console.log(this.value)
+  if(this.validate(this.value)){
+    this.admin.getUrl().subscribe(res=>{
+      let val=res.holiday.find((item:any)=>{
+        let key=Object.keys(item)[0]
+        return item[key].includes(this.value)
+      })
+      console.log(val)
+      if(val){
+        if(val[this.month].includes(this.value)){
+          let index=val[this.month].indexOf(this.value)
+          val[this.month].splice(index,1)
+         
+            let mes=`${this.value} is deleted for ${this.leaveReason}`
+            this.updateNotificationStudent(mes)
+            this.updateNotificationFaculty(mes)
+          this.admin.updateAdmin(res)
+        }
+        else{
+          this.errorMes='Date is not exist'
+        }
+      }
+      else{
+        this.errorMes='month or date is not exist'
+      }
+    })
+  }
+}
+
+}
+
+updateNotificationStudent(notifi:string){
+  this.stdService.getFullDocument().subscribe(res=>{
+    let details=res['2024']
+    let key=Object.keys(details)
+    key.forEach((item:any)=>{
+      details[item].unSeen.push(notifi)
+    })
+    this.stdService.updateDocument(res)
+  })
+}
+updateNotificationFaculty(notifi:string){
+  this.faculty.getFullDocument().subscribe(data=>{
+    let storedData=data['mca']
+    let key=Object.keys(storedData)
+    key.forEach(item=>{
+      storedData[item].unSeen.push(notifi)
+    })
+    this.faculty.updateDocument(data)
+  })
+}
+ 
+}
+
+  

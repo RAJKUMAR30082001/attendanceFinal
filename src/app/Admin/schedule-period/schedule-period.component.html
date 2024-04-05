@@ -58,49 +58,51 @@
 
 <form [formGroup]="subjectCode">
     <label for="subjectCode1">Subject Code 1:</label>
-    <input type="text" id="subjectCode1" name="subjectCode1" formControlName="subjectCode1" placeholder="Enter subject code">
+    <input type="text" id="subjectCode1" name="subjectCode1" formControlName="subjectCode1" [placeholder]="placeHolderArray[0]" [readonly]="periodFlag">
     <div *ngIf="subjectCode.get('subjectCode1')!.hasError('required') && subjectCode.get('subjectCode1')!.touched">
         Subject Code 1 is required.
     </div>
+    
 
     <label for="subjectCode2">Subject Code 2:</label>
-    <input type="text" id="subjectCode2" name="subjectCode2" formControlName="subjectCode2"  placeholder="Enter subject code">
+    <input type="text" id="subjectCode2" name="subjectCode2" formControlName="subjectCode2"  [placeholder]="placeHolderArray[1]" [readonly]="periodFlag">
     <div *ngIf="subjectCode.get('subjectCode2')!.hasError('required') && subjectCode.get('subjectCode2')!.touched">
         Subject Code 2 is required.
     </div>
 
     <label for="subjectCode3">Subject Code 3:</label>
-    <input type="text" id="subjectCode3" name="subjectCode3" formControlName="subjectCode3"  placeholder="Enter subject code">
+    <input type="text" id="subjectCode3" name="subjectCode3" formControlName="subjectCode3"  [placeholder]="placeHolderArray[2]" [readonly]="periodFlag">
     <div *ngIf="subjectCode.get('subjectCode3')!.hasError('required') && subjectCode.get('subjectCode3')!.touched">
         Subject Code 3 is required.
     </div>
 
     <label for="subjectCode4">Subject Code 4:</label>
-    <input type="text" id="subjectCode4" name="subjectCode4" formControlName="subjectCode4"  placeholder="Enter subject code">
+    <input type="text" id="subjectCode4" name="subjectCode4" formControlName="subjectCode4"  [placeholder]="placeHolderArray[3]" [readonly]="periodFlag">
     <div *ngIf="subjectCode.get('subjectCode4')!.hasError('required') && subjectCode.get('subjectCode4')!.touched">
         Subject Code 4 is required.
     </div>
 
     <label for="subjectCode5">Subject Code 5:</label>
-    <input type="text" id="subjectCode5" name="subjectCode5" formControlName="subjectCode5"  placeholder="Enter subject code">
+    <input type="text" id="subjectCode5" name="subjectCode5" formControlName="subjectCode5"  [placeholder]="placeHolderArray[4]" [readonly]="periodFlag">
     <div *ngIf="subjectCode.get('subjectCode5')!.hasError('required') && subjectCode.get('subjectCode5')!.touched">
         Subject Code 5 is required.
     </div>
 
-    <button type="button" (click)="updateSubjectCodes()">Update</button>
+    <!-- <button type="button" (click)="updateSubjectCodes()">Update</button> -->
     <button type="button" (click)="nextPage()">Next</button>
 </form>
+
 </div> 
     <div *ngIf="attendanceFlag" class="displaySubject">
         <h1 class="display-9" id="heading">Schedule</h1>
-
+        <div>{{errorVal}}</div>
         <div *ngIf="currentDay<4">
             <form [formGroup]="periodForm">
-                <h3>{{ getDay()| uppercase }}</h3>
+                <h3>{{ getDay()|uppercase }}</h3>
               
                 <label for="subjectName">Subject Name:</label>
                 <input type="text" id="subjectName" name="subjectName" formControlName="subjectName" placeholder="Enter subjectName">
-                <div *ngIf="periodForm.get('subjectName')!.hasError('required') && periodForm.get('subjectName')!.touched">
+                <div *ngIf="periodForm.get('subjectName')!.hasError('required')&& periodForm.get('subjectName')!.touched">
                   Subject Name is required.
                 </div>
               
@@ -120,7 +122,7 @@
                 </div>
               
                 <label for="endTiming">End Timing:</label>
-                <input type="text" id="endTiming" name="endTiming" formControlName="endTiming" placeholder="hh:mm Am/Pm">
+                <input type="text" id="endTiming" name="endTiming" formControlName="endTiming" placeholder="hh:mm am/pm">
                 <div *ngIf="periodForm.get('endTiming')!.hasError('required') && periodForm.get('endTiming')!.touched">
                   End Timing is required.
                 </div>

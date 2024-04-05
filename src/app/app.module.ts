@@ -22,6 +22,8 @@ import { RemoveStudentComponent } from './Admin/remove-student/remove-student.co
 import { HolidayInputComponent } from './Admin/holiday-input/holiday-input.component';
 import { NotificationComponent } from './studentHome/notification/notification.component';
 import { AttendanceViewComponent } from './studentHome/attendance-view/attendance-view.component';
+import { HolidayNotificationComponent } from './studentHome/holiday-notification/holiday-notification.component';
+import { HolidayUpdateComponent } from './facultyHome/holiday-update/holiday-update.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { AttendanceViewComponent } from './studentHome/attendance-view/attendanc
     RemoveStudentComponent,
     HolidayInputComponent,
     NotificationComponent,
-    AttendanceViewComponent
+    AttendanceViewComponent,
+    HolidayNotificationComponent,
+    HolidayUpdateComponent
   ],
   imports: [
     BrowserModule,

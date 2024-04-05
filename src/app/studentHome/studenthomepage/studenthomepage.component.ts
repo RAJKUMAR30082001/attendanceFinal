@@ -15,6 +15,7 @@ export class StudenthomepageComponent implements OnInit{
   leaveLetterFlag:boolean=true
   attendanceFlag:boolean=false
   redMark:boolean=false
+  holiday:boolean=false
 
 constructor(private service:CheckValidityService){}
     ngOnInit(): void {
@@ -45,17 +46,28 @@ constructor(private service:CheckValidityService){}
       this.attendanceFlag=false
       this.leaveLetterFlag=false
       this.redMark=false
+      this.holiday=false
     }
     leaveLetter(event:Event){
       event.preventDefault()
+      this.holiday=false
       this.notificationFlag=false
       this.attendanceFlag=false
       this.leaveLetterFlag=true
     }
     attendance(event:Event){
       event.preventDefault()
+      this.holiday=false
       this.notificationFlag=false
       this.attendanceFlag=true
       this.leaveLetterFlag=false
+    }
+    holidayNotification(event:Event){
+      event.preventDefault()
+     
+      this.notificationFlag=false
+      this.attendanceFlag=false
+      this.leaveLetterFlag=false
+      this.holiday=true
     }
 }

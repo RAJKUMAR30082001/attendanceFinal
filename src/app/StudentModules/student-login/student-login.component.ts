@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/admin.service';
@@ -11,7 +11,7 @@ import { loginDetails } from 'src/app/student-data';
   templateUrl: './student-login.component.html',
   styleUrls: ['./student-login.component.scss']
 })
-export class StudentLoginComponent implements OnInit {
+export class StudentLoginComponent implements OnInit,OnDestroy {
   loginForm!:FormGroup
   errorMessage!:HTMLDivElement
   year:number=new Date().getFullYear()
@@ -104,7 +104,19 @@ export class StudentLoginComponent implements OnInit {
     }
   }
   
-    
+  ngOnDestroy(): void {
+    console.log("destroyed")
+    if (this.video) {
+      const stream = this.video.srcObject as MediaStream;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => {
+          track.stop();
+        });
+      }
+      this.video.srcObject = null; 
+    }
+  }
     
   }
 

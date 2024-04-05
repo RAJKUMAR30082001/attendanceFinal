@@ -11,6 +11,8 @@ export interface StudentData {
     notification:string[]
     attendanceRecord:any[]
     numberOfClasses:{}
+    seen:[]
+    unSeen:[]
 }
 export interface CouchDBViewResponse {
     total_rows: number;
@@ -34,6 +36,8 @@ export interface facultyLogin{
     department:string
     permitted:boolean
     leavePermission:[]
+    seen:[]
+    unSeen:[]
 }
 
 export interface leaveLetterForm{

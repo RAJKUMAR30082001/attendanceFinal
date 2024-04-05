@@ -37,18 +37,19 @@
 
 <div class="date-container">
     <div class="errorMessage" *ngIf="errorMes">{{errorMes}}</div>
-    <label for="month" class="form-label">Select Month:</label>
-    <select id="month" class="form-select" (change)="selectedMonth($event)" required>
-        <!-- Add your month options dynamically or manually -->
-        <option *ngFor="let i of months" [value]="i">{{i}}</option>
-    </select>
    
-    <label for="dates" class="form-label">Enter Dates:</label>
-    <input type="date" id="dates" class="form-control form-control-lg" placeholder="Select Holiday dates" multiple (input)="enteredDates($event)">
+    <label for="dates" class="form-label">Enter Date:</label>
+    <input type="date" id="dates" class="form-control form-control-lg" placeholder="Select exist Holiday dates" (input)="enteredDate($event)" required>
+    <div *ngIf="updateFlag">
+    <label for="dates" class="form-label">Enter Date:</label>
+    <input type="date" id="dates" class="form-control form-control-lg" placeholder="Select update Holiday dates" (input)="updatedDate($event)" required></div>
+    <label for="reason" class="form-label">Reason for Leave:</label>
+    <textarea id="reason" class="form-control" rows="4" placeholder="Enter reason for leave" [(ngModel)]="leaveReason" required></textarea>
     
     <button class="btn btn-primary btn-lg" (click)="addDates()">Add</button>
     <button class="btn btn-primary btn-lg" (click)="updateDates()">Update</button>
-    <button class="btn btn-danger btn-lg" (click)="deleteDates()">Delete</button>
+    <button class="btn btn-danger btn-lg" (click)="deleteDate()">Delete</button> 
+    <button class="btn btn-primary btn-lg" (click)="clear()">Clear Data</button>
 </div>
 
 </body>
