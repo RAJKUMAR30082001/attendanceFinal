@@ -60,7 +60,10 @@ export class StudentCouchService {
 
             studentData[registerNumber] = details;
             this.updateDocument(data)
+
             console.log(registerNumber)
+
+
             this.router.navigate(['/faceRegister',registerNumber])
           } 
           else {

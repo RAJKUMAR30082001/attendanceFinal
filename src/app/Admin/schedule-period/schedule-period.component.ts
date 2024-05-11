@@ -32,8 +32,13 @@ export class SchedulePeriodComponent implements OnInit{
     this.period=this.check.getData().subjectCode
     console.log(this.period)
     this.initializeCodeForm()
+
     if(this.period.length>0){
       this.placeHolderArray=this.period
+    if(this.period[0]==='' || this.period.length>0){
+      console.log(this.period.length,'length')
+      // this.error.innerHTML= "Go next"
+
       this.periodFlag=true
       this.flag=false
       console.log(this.placeHolderArray)
@@ -48,7 +53,7 @@ export class SchedulePeriodComponent implements OnInit{
     this.error=this.render.selectRootElement(".errorMessage")
     this.error.innerHTML= "Please add a Subject code first."
    }
-}
+}}
   updateSubjectCodes(){
     this.periodFlag=true
   }
@@ -79,6 +84,7 @@ export class SchedulePeriodComponent implements OnInit{
     
   }
   next(){
+    
     let details:periodWiseData={
       subjectName:this.periodForm.value.subjectName?this.periodForm.value.subjectName.toLowerCase():'',
       subjectCode:this.periodForm.value.subjectCode?this.periodForm.value.subjectCode.toLowerCase():'',
@@ -188,5 +194,6 @@ getTime(Time:string):number{
 
   
 }
+
 
 

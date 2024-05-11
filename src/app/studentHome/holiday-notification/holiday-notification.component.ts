@@ -9,6 +9,7 @@ import { StudentCouchService } from 'src/app/student-couch.service';
 })
 export class HolidayNotificationComponent implements OnInit, OnDestroy{
   public notification!:[]
+  public notifications!:[]
   constructor(private stdCouch:StudentCouchService,private check:CheckValidityService){}
   ngOnInit(): void {
     this.notification=this.check.getData().unSeen
@@ -20,11 +21,23 @@ export class HolidayNotificationComponent implements OnInit, OnDestroy{
       let storedData=res['2024']
       let key=Object.keys(storedData)
       key.forEach((item:any)=>{
-        storedData[item].seen=storedData[item].unSeen.map((notifi:string)=> {return notifi})
+       
+        if(item===this.check.getData().registerNumber){
+        storedData[item].unSeen.forEach((notifi:string)=> {
+          storedData[item].seen.push(notifi)
+        })
+        console.log(storedData[item].seen)
         storedData[item].unSeen=[]
         this.stdCouch.updateDocument(res)
+      }
       })
     })
+  }
+
+  viewmsg(){
+    console.log(this.check.getData())
+    this.notifications=this.check.getData().seen
+    console.log(this.notifications)
   }
   
 }

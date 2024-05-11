@@ -8,3 +8,17 @@
         </div>
     </div>
 </div>
+
+<button (click)="viewmsg()" id="view">view seen messages</button>
+
+<div class="container" *ngIf="notifications">
+    <h1>Seen</h1>
+    <div class="row">
+        <div class="col">
+            <ng-container *ngIf="notifications.length==0"><p>No previous messages</p></ng-container>
+            <div *ngFor="let i of notifications" class="alert alert-primary" role="alert">
+                <p>{{i}}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -89,11 +89,14 @@
             <div id="sidebar-buttons">
                 <a class="sidebar-button" (click)='update($event)'>Update Attendance</a>
                 <a href="#" class="sidebar-button" (click)='grantPermission($event)'>Grant Permission</a>
+                <a class="sidebar-button" (click)='holidayEvent($event)'>holiday update</a>
+
                 <a href="#" class="sidebar-button" id="logout" (click)="logout()">Logout</a>
             </div>
         </div>
        <div *ngIf="flag"><app-permit-leave></app-permit-leave></div>
-       <div *ngIf="!flag"><app-update-attendance></app-update-attendance></div>
+       <div *ngIf="updateFlag"><app-update-attendance></app-update-attendance></div>
+       <div *ngIf="holiday"><app-holiday-update></app-holiday-update></div>
         <!-- Main content goes here -->
     </div>
 </body>

@@ -76,8 +76,9 @@ export class StudentRegisterComponent implements OnInit {
         };
         console.log(this.studentDetails)
         this.service.putDocuments(this.studentDetails,this.currentYear,this.errorDivElement);
-        // this.registerForm.reset();
-       
+
+        this.registerForm.reset();
+
       } else {
         this.errorDivElement.innerHTML="Enter correct password"
       }

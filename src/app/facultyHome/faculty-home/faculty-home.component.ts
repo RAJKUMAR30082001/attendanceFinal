@@ -9,6 +9,8 @@ import { CheckValidityService } from 'src/app/check-validity.service';
 export class FacultyHomeComponent implements  OnInit {
   facultyDetails!:any
   flag:boolean=false;
+  holiday:boolean=false
+  updateFlag:boolean=true
   constructor(private check:CheckValidityService){}
   ngOnInit(): void {
     let auth=this.check.getAuth()
@@ -19,12 +21,21 @@ export class FacultyHomeComponent implements  OnInit {
   update(event:Event){
     event.preventDefault()
     this.flag=false
+    this.holiday=false
   }
   grantPermission(event:Event){
     event.preventDefault()
     this.flag=true
+    this.updateFlag=false
+    this.holiday=false
   }
   logout(){
     this.check.removeData()
+  }
+  holidayEvent(event:Event){
+    event.preventDefault()
+    this.flag=false
+    this.updateFlag=false
+    this.holiday=true
   }
 }

@@ -25,6 +25,7 @@ export class NotificationComponent implements OnInit {
       this.hours=data.hours
       this.notify(this.userDetails)
     })
+    this.absenceNotification()
    
     
   }
