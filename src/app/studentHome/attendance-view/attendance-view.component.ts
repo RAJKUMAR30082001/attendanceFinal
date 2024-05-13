@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit ,ViewChild} from '@angular/core';
+import { AfterViewInit, Component,OnInit } from '@angular/core';
 import { CheckValidityService } from 'src/app/check-validity.service';
 import { StudentCouchService } from 'src/app/student-couch.service';
 import { Chart} from 'chart.js/auto'
